@@ -1,0 +1,17 @@
+#signIn{
+    position: relative;
+    align-items: center;
+    left: 550px;
+    border: 3px;
+    height: 500px;
+    width: 400px;
+    border-width: 3px;
+    padding: 10px;
+    bottom: -50px;
+    border-style: groove;
+}
+#nav{
+    position: relative;
+    padding: 10px;
+    left: 550px;
+}

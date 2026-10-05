@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="style/signIn.css">
+</head>
+<body>
+    <ul id="nav">
+            <li><a href="busqueda.html" id="rgr"><span>Busqueda </span></a></li>
+            <li><a href="signIn.html" id="lgn"><span>Registrarse</span></a></li>
+            <li><a href="partePrivada.html" id="rgr"><span>Perfil </span></a></li>
+    </ul>
+    <section id="signIn">
+        <h1>Registro:</h1>
+        <form action="index2.html">
+            <label">Nombre de usuario: <input type="text" minlength="3" maxlength="15" pattern="[a-zA-Z0-9]" required></label>
+            <br><br><label">Contraseña: <input type="password" pattern="[a-zA-Z0-9]-_" required></label>
+            <br><br><label">Repita la contraseña: <input type="password" required></label>
+            <br><br><label">Email: <input type="email" required></label>
+            <br><br><label">Sexo: <input type="text" required></label>
+            <br><br><label">Fecha de nacimiento: <input type="text" required></label>
+            <br><br><label">Ciudad de residencia: <input type="text" ></label>
+            <br><br><label">País de residencia: <input type="text" ></label>
+            <br><br><label">Foto: <input type="file" ></label>
+            <input type="submit">
+        </form>
+        <p>Ya tienes una cuenta? <a href="">Inicia sesión</a></p>
+    </section>
+</body>
+</html>
