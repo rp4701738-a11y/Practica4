@@ -1,0 +1,42 @@
+section{
+    float: left;
+    display: inline;
+    border-width: 3px;
+    padding: 10px;
+    bottom: -50px;
+    border-style: groove;
+    height: 210px;
+    width: 325px;
+    margin: 10px;
+    top: 30px;
+    position: relative;
+}
+p {
+  margin: 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+  display: flex;
+  justify-content: center;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #111111;
+}
+#buscador{
+    position: relative;
+    padding: 10px;
+    left: 520px;
+    top: 10px;
+}
