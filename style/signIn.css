@@ -8,10 +8,24 @@
     border-width: 3px;
     padding: 10px;
     bottom: -50px;
-    border-style: groove;
+    border-style: double;
 }
-#nav{
-    position: relative;
-    padding: 10px;
-    left: 550px;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #0aecca;
+  display: flex;
+  justify-content: center;
+}
+
+ul li a {
+  display: block;
+  color: rgb(18, 10, 231);
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #111111;
 }

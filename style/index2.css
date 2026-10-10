@@ -19,14 +19,14 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  background-color: #333333;
+  background-color: #0aecca;
   display: flex;
   justify-content: center;
 }
 
 ul li a {
   display: block;
-  color: white;
+  color: rgb(18, 10, 231);
   padding: 14px 16px;
   text-decoration: none;
 }
@@ -37,6 +37,10 @@ ul li a:hover {
 #buscador{
     position: relative;
     padding: 10px;
-    left: 520px;
+    left: 620px;
     top: 10px;
+    display: flex;
+}
+@media all and (width > 866px) {
+
 }
