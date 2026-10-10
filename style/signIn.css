@@ -9,23 +9,24 @@
     padding: 10px;
     bottom: -50px;
     border-style: double;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  background-color: #0aecca;
-  display: flex;
-  justify-content: center;
+    background-color: #5c7873;
 }
 
-ul li a {
-  display: block;
-  color: rgb(18, 10, 231);
-  padding: 14px 16px;
-  text-decoration: none;
+/*Para titulos*/
+h1 {
+  color: #5cead5;
+  font-family: "Monaco", monospace;
 }
 
-ul li a:hover {
-  background-color: #111111;
+/*Para los campos de los formulario*/
+label {
+  font-size: large;
+  color: #48b4f2;
+  font-weight: bold;
+  font-family: "Georgia", serif;
+}
+
+/*Iniciar sesion*/
+p {
+  font-family: "Georgia", serif;
 }
