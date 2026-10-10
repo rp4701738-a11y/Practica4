@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folleto</title>
+</head>
+<body>
+
+    <li><a href="index2.html" id="rgr"><span>Menú principal</span></a></li>
+    <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+
+    <form action="respuestaFolleto.html">
+        <br><br>
+        <p>Esta página sirve para diseñar un folleto publicitario de tu anuncio, el cual podrás imprimir y colgar por ahí.</p>
+        <label>Tarifas:</label>
+        <table>
+            <tr>
+                <th>Tipo</th>
+                <th>Precio</th>
+            </tr>
+            <tr>
+                <td>Cantidad de fotos</td>
+                <td>4 céntimos por foto</td>
+            </tr>
+            <tr>
+                <td>A color</td>
+                <td>20 céntimos</td>
+            </tr>
+            <tr>
+                <td>En blanco y negro</td>
+                <td>10 céntimos</td>
+            </tr>
+            <tr>
+                <td>Número de páginas</td>
+                <td>20 céntimos por página</td>
+            </tr>
+            <tr>
+                <td>Resolución</td>
+                <td>2 céntimos por cada pulgada</td>
+            </tr>
+        </table>
+
+        <br><input type="text" size="30" placeholder="Resumen" max="4000">
+        <input type="text" max="200" required placeholder="nombre y apellido" required>
+        <input type="email" required placeholder="email" max="200" required>
+
+        <br>
+        <br>
+        Dirección:
+        <br>
+        <input type="text" placeholder="calle" required>
+        <input type="text" placeholder="número" required>
+        <input type="text" placeholder="piso" required>
+        <input type="text" placeholder="puerta" required>
+        <input type="text" placeholder="codigo postal" required>
+        <input type="text" placeholder="localidad" required>
+        <input type="text" placeholder="provincia" required>
+        <input type="text" placeholder="país" required>
+        <br>
+        <br>
+
+        <input type="number" placeholder="telefono">
+        <label>Color de la portada: <input type="color" value="#000000" required></label>
+        <label>Número de copias: <input type="number" value="1" min="1" max="99" required></label>
+        <label>Resolución de las fotos: <input type="number" step="150" value="150" min="150" max="900" required>DPI</label>
+
+        
+
+        <label for="anuncio">Anuncio:</label>
+        <input list="anuncios" name="anuncio" id="anuncio" required>
+        <datalist id="anuncios">
+            <option value="Piso en Alicante">
+            <option value="Casa rural de Crevillente">
+            <option value="Apartamento en Elda">
+        </datalist>
+
+        <label>¿Cuándo quiere recibir el envió postal?(dd/mm/yy):</label><input type="text">
+        
+        <label>¿Impresión a color o en blanco y negro?:</label>
+        <input type="radio" id="blanco-negro" name="color" value="Blanco y negro">
+        <label for="blanco-negro">Blanco y negro</label><br>
+        <input type="radio" id="a-color" name="color" value="A color">
+        <label for="a-color">A color</label><br>
+
+        <label>Añadir el precio en el anuncio?: <input type="checkbox"></label>
+        <input type="submit">
+    </form>
+</body>
+</html>
