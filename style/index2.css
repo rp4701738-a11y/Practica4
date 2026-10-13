@@ -10,36 +10,20 @@ section{
     margin: 10px;
     top: 30px;
     position: relative;
-}
-p {
-  margin: 10px;
-}
+    background-color: #5c7873;
+} 
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  background-color: #0aecca;
-  display: flex;
-  justify-content: center;
-}
-
-ul li a {
-  display: block;
-  color: rgb(18, 10, 231);
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-ul li a:hover {
-  background-color: #111111;
-}
 #buscador{
     position: relative;
     padding: 10px;
     left: 620px;
     top: 10px;
     display: flex;
+}
+p {
+  font-family: "Georgia", serif;
+  color: #48b4f2;
+  margin: 10px;
 }
 @media all and (width > 866px) {
 
