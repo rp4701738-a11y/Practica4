@@ -19,3 +19,8 @@ section{
     left: 320px;
     top: 40px;
 }
+p {
+  font-family: "Georgia", serif;
+  color: #48b4f2;
+  margin: 10px;
+}
