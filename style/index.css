@@ -1,0 +1,42 @@
+#iniciar-sesion{
+    float: right;
+    border-style: groove;
+
+    margin-top: 14px;
+    padding: 10px;
+
+    text-align: right;
+}
+
+label {
+  color: #48b4f2;
+  font-weight: bold;
+  font-family: "Georgia", serif;
+}
+
+p {
+  color: #48b4f2;
+  font-family: "Georgia", serif;
+  text-align: center;
+}
+
+section{
+    border-width: 3px;
+    padding: 10px;
+    bottom: -50px;
+    border-style: groove;
+    height: fit-content;
+    width: fit-content;
+    margin: 10px;
+    top: 30px;
+}
+
+#buscador{
+    padding: 10px;
+    left: 620px;
+    top: 10px;
+    display: flex;
+}
+@media all and (width > 866px) {
+
+}

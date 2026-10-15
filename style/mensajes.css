@@ -1,0 +1,19 @@
+div {
+    border-width: 3px;
+    padding: 10px;
+    bottom: -50px;
+    border-style: groove;
+    border-color: #000;
+    height: fit-content;
+    margin: 10px;
+    top: 30px;
+}
+
+.negro {
+    color: #000;
+}
+
+p {
+    color: #48b4f2;
+    font-family: "Georgia", serif;
+}

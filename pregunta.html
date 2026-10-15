@@ -3,15 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pregunta</title>
+    <link rel="stylesheet" href="style/barraNav.css">
+    <link rel="stylesheet" href="style/titulos.css">
+    <link rel="stylesheet" href="style/pregunta.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <li><a href="busqueda.html" id="rgr"><span>Busqueda </span></a></li>
-    <li><a href="signIn.html" id="lgn"><span>Registrarse</span></a></li>
-    <li><a href="partePrivada.html" id="rgr"><span>Perfil </span></a></li>
-    <form>
-        <input type="text">
-        <p>Más información<input type="checkbox"> Solicitar cita<input type="checkbox" value=> Comunicar una oferta<input type="checkbox"></p>
+    <ul>
+        <li><a href="index2.html" id="rgr"><span>Inicio</span></a></li>
+        <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+        <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+    </ul>
+
+    <form action="index.html">
+        <h3>Tipo de pregunta: </h3>
+        
+        <div>
+            <input type="radio" id="info" name="tipo-pregunta" value="Más información">
+            <label for="blanco-negro">Más información</label><br>
+            <input type="radio" id="cita" name="tipo-pregunta" value="Solicitar cita">
+            <label for="cita">Solicitar cita</label><br>
+            <input type="radio" id="oferta" name="tipo-pregunta" value="Comunicar una oferta">
+            <label for="oferta">Comunicar una oferta</label>
+        </div>
+
+        <div>
+            <textarea name="textarea1" rows="4" cols="50" placeholder="Escribe tu pregunta..."></textarea>
+        </div>
+
+        <section>
+            <input type="submit">
+        </section>
     </form>
 </body>
 </html>

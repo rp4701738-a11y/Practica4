@@ -1,0 +1,22 @@
+div {
+    border-width: 3px;
+    padding: 10px;
+
+    height: fit-content;
+    margin-left: 10px;
+    margin-right: 10px;
+    top: 30px;
+    bottom: -50px;
+    
+    float: left;
+    display: inline;
+}
+
+section {
+    clear: left;
+}
+
+label {
+    font-family: "Georgia", serif;
+    color: #48b4f2;
+}
