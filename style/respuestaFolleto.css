@@ -1,0 +1,16 @@
+section {   
+    border: 3px;
+    height: fit-content;
+    width: 400px;
+    border-width: 3px;
+    padding: 10px;
+    bottom: -50px;
+    border-style: double;
+    background-color: #5c7873;
+}
+
+p {
+    font-family: "Georgia", serif;
+    font-size: large;
+    color: #48b4f2;
+}

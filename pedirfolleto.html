@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Folleto</title>
+    <link rel="stylesheet" href="style/barraNav.css">
+    <link rel="stylesheet" href="style/titulos.css">
+    <link rel="stylesheet" href="style/pedirFolleto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <li><a href="index2.html" id="rgr"><span>Menú principal</span></a></li>
-    <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+    <nav>
+        <ul>
+            <li><a href="index2.html" id="rgr"><span>Menú principal</span></a></li>
+            <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+            <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+            <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
+        </ul>
+    </nav>
+
+    <h2>Diseña tu folleto</h2>
+    <hr size="1px" align="left" color="black">
 
     <form action="respuestaFolleto.html">
-        <br><br>
+        <br>
         <p>Esta página sirve para diseñar un folleto publicitario de tu anuncio, el cual podrás imprimir y colgar por ahí.</p>
         <label>Tarifas:</label>
         <table>
@@ -41,33 +54,33 @@
             </tr>
         </table>
 
-        <br><input type="text" size="30" placeholder="Resumen" max="4000">
-        <input type="text" max="200" required placeholder="nombre y apellido" required>
-        <input type="email" required placeholder="email" max="200" required>
+        <br><input type="text" size="30" placeholder="Resumen del anuncio" max="4000">
+
+        <br><br><label>Tus datos:</label><br>
+        <input type="text" max="200" required placeholder="Nombre y apellido" required>
+        <input type="email" required placeholder="Email" max="200" required>
+        <input type="number" placeholder="Teléfono de contacto">
 
         <br>
         <br>
-        Dirección:
+        <label>Dirección del anuncio:</label>
         <br>
-        <input type="text" placeholder="calle" required>
-        <input type="text" placeholder="número" required>
-        <input type="text" placeholder="piso" required>
-        <input type="text" placeholder="puerta" required>
-        <input type="text" placeholder="codigo postal" required>
-        <input type="text" placeholder="localidad" required>
-        <input type="text" placeholder="provincia" required>
-        <input type="text" placeholder="país" required>
+        <input type="text" placeholder="Calle" required>
+        <input type="text" placeholder="Número" required>
+        <input type="text" placeholder="Piso" required>
+        <input type="text" placeholder="Puerta" required>
+        <input type="text" placeholder="Codigo postal" required>
+        <input type="text" placeholder="Localidad" required>
+        <input type="text" placeholder="Provincia" required>
+        <input type="text" placeholder="País" required>
         <br>
         <br>
 
-        <input type="number" placeholder="telefono">
         <label>Color de la portada: <input type="color" value="#000000" required></label>
-        <label>Número de copias: <input type="number" value="1" min="1" max="99" required></label>
-        <label>Resolución de las fotos: <input type="number" step="150" value="150" min="150" max="900" required>DPI</label>
+        <br><label>Número de copias: <input type="number" value="1" min="1" max="99" required></label>
+        <br><label>Resolución de las fotos: <input type="number" step="150" value="150" min="150" max="900" required>DPI</label>
 
-        
-
-        <label for="anuncio">Anuncio:</label>
+        <br><label for="anuncio">Anuncio:</label>
         <input list="anuncios" name="anuncio" id="anuncio" required>
         <datalist id="anuncios">
             <option value="Piso en Alicante">
@@ -75,10 +88,10 @@
             <option value="Apartamento en Elda">
         </datalist>
 
-        <label>¿Cuándo quiere recibir el envió postal?(dd/mm/yy):</label><input type="text">
+        <br><label>¿Cuándo quiere recibir el envió postal?:</label><input type="date">
         
-        <label>¿Impresión a color o en blanco y negro?:</label>
-        <input type="radio" id="blanco-negro" name="color" value="Blanco y negro">
+        <br><label>¿Impresión a color o en blanco y negro?:</label>
+        <br><input type="radio" id="blanco-negro" name="color" value="Blanco y negro">
         <label for="blanco-negro">Blanco y negro</label><br>
         <input type="radio" id="a-color" name="color" value="A color">
         <label for="a-color">A color</label><br>

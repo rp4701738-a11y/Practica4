@@ -15,6 +15,30 @@ ul li a {
   text-decoration: none;
 }
 
+#lol{
+  color: rgb(0, 0, 0);
+  font-family: "Monaco", monospace;
+}
+
 ul li a:hover {
   background-color: rgb(127, 213, 203);
+}
+body:has(#osc:checked){
+background-color: black;
+color: white;
+h1 {
+    color: #d6dede;
+}
+label{
+    color: #f7f7f7;
+}
+ul{
+  background-color: gray;
+}
+ul li a{
+  color: white;
+}
+#lol{
+  color: rgb(248, 244, 244);
+  }
 }

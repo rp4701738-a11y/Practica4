@@ -1,27 +1,31 @@
-#signIn{
+section{
     position: relative;
     align-items: center;
     left: 550px;
     border: 3px;
-    height: 500px;
-    width: 400px;
+    height: fit-content;
+    width: fit-content;
     border-width: 3px;
     padding: 10px;
     bottom: -50px;
     border-style: double;
-    background-color: #5c7873;
+    background-color: #70a99f;
 }
-
+body:has(#osc:checked){
+section{
+  background-color: gray;
+}
+}
 /*Para titulos*/
 h1 {
-  color: #5cead5;
+  color: #08ffda;
   font-family: "Monaco", monospace;
 }
 
 /*Para los campos de los formulario*/
 label {
   font-size: large;
-  color: #48b4f2;
+  color: #046299;
   font-weight: bold;
   font-family: "Georgia", serif;
 }
@@ -29,4 +33,11 @@ label {
 /*Iniciar sesion*/
 p {
   font-family: "Georgia", serif;
+}
+
+@media all and (width > 1078) {
+#signIn{
+      left: 350px;
+
+}
 }

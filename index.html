@@ -1,33 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Principal</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style/barraNav.css">
+    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/titulos.css">
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="busqueda.html" id="rgr"><span>Busqueda </span></a></li>
-            <li><a href="signIn.html" id="lgn"><span>Registrarse</span></a></li>
+            <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+            <li><a href="signUp.html" id="lgn"><span>Registrarse</span></a></li>
             <li><a href="partePrivada.html" id="rgr"><span>Perfil </span></a></li>
+            <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
         </ul>
-        <form action="index2.html">
-            <h4>Iniciar sesión:</h4>
-            <label">Nombre de usuario: <input type="text"></label>
-            <label">Contraseña: <input type="password"></label>
-            <br>
-            <input type="submit">
-        </form>
+        <section id="iniciar-sesion">
+            <form action="index2.html">
+                <h4>Iniciar sesión</h4>
+                <label>Nombre de usuario: <input type="text"></label><br>
+                <label>Contraseña: <input type="password"></label>
+                <br><br>
+                <input type="submit">
+            </form>
+        </section>
         <br><br><br>
     </nav>
     <form>
-        <input type="text" placeholder="Buscar por ciudad">
+        <input type="text" placeholder="Buscar por ciudad" id="buscador">
     </form>
-    <br>
-    <a href="anuncio.html"><img src="imagenes/casa1.jpeg"></a><p>Casa en el Caribe</p>
-    <a href="error.html"><img src="imagenes/apartamento1.jpeg"></a><p>Apartamento en Murcia</p>
+    <br><br>
 
+    <h2>Anuncios destacados</h2>
+    <hr size="1px" align="left" color="black">
+    <br><br>
+
+    <section>
+        <a href="anuncio.html"><img src="imagenes/casa1.jpeg"></a><p>Casa en el Caribe</p>
+    </section>
     
+    <section>
+        <a href="error.html"><img src="imagenes/apartamento1.jpeg"></a><p>Apartamento en Murcia</p>
+    </section>
+
 </body>
 </html>
