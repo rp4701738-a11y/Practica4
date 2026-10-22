@@ -16,10 +16,74 @@ p {
 }
 
 @media all and (width < 992px) {
-section{
-    transform: scale(0.9);
+    section {
+        transform: scale(0.9);
+    }
+    h3 {
+        transform: scale(0.9);
+    }
 }
-h3{
-    transform: scale(0.9);
+
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
 }
+
+/* ---------------------Estilos para la impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+/* URL de la página */
+#url-impresion {
+    display: none;
+}
+body:has(#print-toggle:checked) #url-impresion {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) section,
+body:has(#print-toggle:checked) h3 {
+    transform: none !important;
+}
+
+/* Forzar textos a negro y control de líneas widows/orphans */
+body:has(#print-toggle:checked) p,
+body:has(#print-toggle:checked) h3,
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Ocultar elementos de navegación */
+body:has(#print-toggle:checked) nav {
+    display: none;
+}
+
+/* Adaptar el recuadro del recibo para que no consuma tinta y no se corte */
+body:has(#print-toggle:checked) section {
+    border-width: 1pt;
+    padding: 15pt;
+    margin: 10pt 0;
+    border-style: solid;
+    border-color: #000000;
+    background-color: transparent;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    width: auto;
 }

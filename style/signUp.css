@@ -1,4 +1,4 @@
-section{
+section {
     position: relative;
     align-items: center;
     left: 550px;
@@ -10,35 +10,132 @@ section{
     bottom: -50px;
     border-style: double;
     background-color: #70a99f;
+    margin-bottom: 20px;
 }
-body:has(#osc:checked){
-section{
-  background-color: gray;
-}
+body:has(#osc:checked) {
+    section {
+        background-color: gray;
+    }
 }
 /*Para titulos*/
 h1 {
-  color: #0026ff;
-  font-family: "Monaco", monospace;
+    color: #0026ff;
+    font-family: "Monaco", monospace;
 }
 
 /*Para los campos de los formulario*/
 label {
-  font-size: large;
-  color: #046299;
-  font-weight: bold;
-  font-family: "Georgia", serif;
+    font-size: large;
+    color: #046299;
+    font-weight: bold;
+    font-family: "Georgia", serif;
 }
 
 /*Iniciar sesion*/
 p {
-  font-family: "Georgia", serif;
+    font-family: "Georgia", serif;
 }
 
 @media all and (width < 1078px) {
-#signIn{
-  transform: scale(0.8);
-  transform-origin: top center;
-  left: 220px;
+    #signIn {
+        transform: scale(0.8);
+        transform-origin: top center;
+        left: 220px;
+    }
 }
+
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+/* ---------------- Estilos de impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+/* URL de la página */
+#url-impresion {
+    display: none;
+}
+body:has(#print-toggle:checked) #url-impresion {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+/* Evitar que el transform y el left posicionen mal el formulario en la impresión */
+body:has(#print-toggle:checked) section,
+body:has(#print-toggle:checked) #signIn {
+    transform: none !important;
+    left: 0 !important;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border-color: #000000;
+    background-color: transparent;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border-width: 1pt;
+    border-style: solid;
+}
+
+/* Forzar textos a negro, tipografía serif y control de líneas */
+body:has(#print-toggle:checked) label,
+body:has(#print-toggle:checked) h1,
+body:has(#print-toggle:checked) p,
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Ocultar navegación */
+body:has(#print-toggle:checked) nav {
+    display: none;
+}
+
+/* Ocultar botón de enviar */
+body:has(#print-toggle:checked) input[type="submit"] {
+    display: none;
+}
+
+/* Ocultar el campo de la foto */
+body:has(#print-toggle:checked) label#foto {
+    display: none;
+}
+
+/* Quitar placeholders */
+body:has(#print-toggle:checked) input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]) {
+    color: transparent !important;
+    background-color: #FFFFFF;
+    border: 1pt solid #999;
+    margin-bottom: 5pt;
+    padding: 3pt;
+}
+
+body:has(#print-toggle:checked) input::placeholder {
+    color: transparent !important;
+}
+
+/* Estilo de enlaces */
+body:has(#print-toggle:checked) a {
+    color: #000000;
+    text-decoration: underline;
+}
+body:has(#print-toggle:checked) a::after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #333333;
 }

@@ -17,3 +17,65 @@ p {
     color: #48b4f2;
     font-family: "Georgia", serif;
 }
+
+/* Solución para que el footer baje al final ignorando flotantes de otras hojas */
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+/* Ocultar la URL por defecto */
+h3 {
+    display: none;
+}
+
+/*---------------- Estilos para la impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+body:has(#print-toggle:checked) h3 {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) h2,
+body:has(#print-toggle:checked) p,
+body:has(#print-toggle:checked) .negro,
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Ocultar elementos de navegación */
+body:has(#print-toggle:checked) nav,
+body:has(#print-toggle:checked) ul {
+    display: none;
+}
+
+/* Adaptar los contenedores de los mensajes para que no se corten */
+body:has(#print-toggle:checked) div {
+    border-width: 1pt;
+    padding: 10pt;
+    margin: 10pt 0;
+    border-style: solid;
+    border-color: #000000;
+    background-color: transparent;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    height: auto;
+}

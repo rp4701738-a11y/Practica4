@@ -1,0 +1,73 @@
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+@media all and (width < 992px) {
+    section{
+        transform: scale(0.9);
+    }
+}
+
+/* ------------------ Estilos de impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+/* URL de la página */
+
+#url-impresion {
+    display: none;
+}
+body:has(#print-toggle:checked) #url-impresion {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) section {
+    transform: none !important;
+}
+
+/* Forzar textos a negro, tipografía serif y control de líneas widows/orphans */
+body:has(#print-toggle:checked) p,
+body:has(#print-toggle:checked) h2,
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Ocultar elementos navegación */
+body:has(#print-toggle:checked) nav,
+body:has(#print-toggle:checked) #menu-principal {
+    display: none;
+}
+
+/* Modificar aspecto de las secciones usando unidades absolutas (pt) */
+body:has(#print-toggle:checked) section {
+    border-width: 1pt;
+    padding: 10pt;
+    margin: 10pt 0;
+    border-style: solid;
+    border-color: #000000;
+    background-color: transparent;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    float: none;
+    display: block;
+    height: auto;
+    width: auto;
+}

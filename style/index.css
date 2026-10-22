@@ -1,26 +1,36 @@
-#iniciar-sesion{
+:root {
+    --color-titulo: #5cead5;
+    --color-texto: #48b4f2;
+    --color-fondo: #5c7873;
+    --blanco: #FFFFFF;
+    --negro: #000000;
+}
+
+#iniciar-sesion {
     float: right;
     border-style: groove;
-
     margin-top: 14px;
     padding: 10px;
-
     text-align: right;
 }
 
+h3 {
+  display: none;
+}
+
 label {
-  color: #48b4f2;
-  font-weight: bold;
-  font-family: "Georgia", serif;
+    color: var(--color-texto);
+    font-weight: bold;
+    font-family: "Georgia", serif;
 }
 
 p {
-  color: #48b4f2;
-  font-family: "Georgia", serif;
-  text-align: center;
+    color: var(--color-texto);
+    font-family: "Georgia", serif;
+    text-align: center;
 }
 
-section{
+section {
     border-width: 3px;
     padding: 10px;
     bottom: -50px;
@@ -31,17 +41,92 @@ section{
     top: 30px;
 }
 
-#buscador{
+#buscador {
     padding: 10px;
     left: 620px;
     top: 10px;
     display: flex;
 }
+
 @media all and (width < 866px) {
-div {
-  transform: scale(0.8);
+    div {
+        transform: scale(0.8);
+    }
+    #iniciar-sesion{
+        transform: scale(0.8);
+    }
 }
-#iniciar-sesion{
-  transform: scale(0.8);
+
+/* ------------------- Estilos para la vista de impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
 }
+
+/* Activar fondo blanco y tipografía serif general */
+body:has(#print-toggle:checked) {
+    background-color: var(--blanco);
+    color: var(--negro);
+    font-family: serif;
+    font-size: 12pt;
+}
+
+
+body:has(#print-toggle:checked) div,
+body:has(#print-toggle:checked) #iniciar-sesion {
+    transform: none !important;
+}
+
+/* Forzar textos a negro, serif y control de widows y orphans */
+body:has(#print-toggle:checked) p,
+body:has(#print-toggle:checked) label,
+body:has(#print-toggle:checked) h4 {
+    color: var(--negro);
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Mostrar enlace página */
+body:has(#print-toggle:checked) h3 {
+    display: block;
+}
+
+/* Controlar el salto de página antes del título principal */
+body:has(#print-toggle:checked) h2 {
+    color: var(--negro);
+    font-family: serif;
+    page-break-before: always;
+    break-before: page;
+}
+
+/* Ocultar elementos interactivos */
+body:has(#print-toggle:checked) nav,
+body:has(#print-toggle:checked) form,
+body:has(#print-toggle:checked) #buscador {
+    display: none;
+}
+
+/* Modificar aspecto de secciones y evitar que se corten entre páginas */
+body:has(#print-toggle:checked) section {
+    border-width: 1pt;
+    padding: 10pt;
+    margin: 10pt 0;
+    border-style: solid;
+    border-color: var(--negro);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+/* Estilo para los enlaces */
+body:has(#print-toggle:checked) a {
+    color: var(--negro);
+    text-decoration: underline;
+}
+
+body:has(#print-toggle:checked) a::after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #333333;
 }

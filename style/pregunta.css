@@ -22,7 +22,85 @@ label {
 }
 
 @media all and (width < 992px) {
-form{
-    transform: scale(0.9);
+    form {
+        transform: scale(0.9);
+    }
 }
+
+/* Footer clear para evitar problemas con elementos flotantes heredados */
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+/* --------------- Estilos de impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+/* URL de la página */
+#url-impresion {
+    display: none;
+}
+body:has(#print-toggle:checked) #url-impresion {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) form {
+    transform: none !important;
+}
+
+/* Forzar textos a negro y control de líneas */
+body:has(#print-toggle:checked) label,
+body:has(#print-toggle:checked) h3,
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Desactivar el flotado de los contenedores para que el diseño sea fluido en papel */
+body:has(#print-toggle:checked) div {
+    float: none;
+    display: block;
+    border-width: 1pt;
+    border-style: solid;
+    border-color: #000000;
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+/* Quitar placeholders */
+body:has(#print-toggle:checked) textarea {
+    color: transparent !important;
+    background-color: #FFFFFF;
+    border: 1pt solid #999;
+    width: 90%;
+    margin-top: 5pt;
+}
+
+body:has(#print-toggle:checked) textarea::placeholder {
+    color: transparent !important;
+}
+
+/* Ocultar elementos de interacción */
+body:has(#print-toggle:checked) nav,
+body:has(#print-toggle:checked) #menu-principal,
+body:has(#print-toggle:checked) input[type="submit"] {
+    display: none;
 }

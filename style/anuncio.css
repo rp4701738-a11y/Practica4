@@ -13,23 +13,104 @@ section{
     position: relative;
     background-color: #5c7873;
 } 
+
 #preg{
     position: relative;
     padding: 10px;
     left: 320px;
     top: 40px;
 }
+
 p {
-  font-family: "Georgia", serif;
-  color: #48b4f2;
-  margin: 10px;
+    font-family: "Georgia", serif;
+    color: #48b4f2;
+    margin: 10px;
 }
 
 @media all and (width < 866px) {
-section{
-    transform: scale(0.8);
+    section{
+        transform: scale(0.8);
+    }
+    #preg{
+        left: 100px;
+    }
 }
-#preg{
-    left: 100px;
+
+/* Footer baja al final ignorando el float: left de las secciones */
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
 }
+
+/* Ocultar la URL por defecto */
+h3 {
+    display: none;
+}
+
+/* Estilos para la vista de impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+/* Mostrar la URL en modo impresión */
+body:has(#print-toggle:checked) h3 {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+/* Activar fondo blanco y tipografía serif general */
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) section {
+    transform: none !important;
+}
+
+/* Forzar textos a negro, serif y control de líneas huérfanas/viudas */
+body:has(#print-toggle:checked) p,
+body:has(#print-toggle:checked) label,
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Ocultar elementos interactivos */
+body:has(#print-toggle:checked) nav,
+body:has(#print-toggle:checked) form.lo {
+    display: none;
+}
+
+/* Modificar aspecto de secciones con unidades absolutas y fondo transparente */
+body:has(#print-toggle:checked) section {
+    border-width: 1pt;
+    padding: 10pt;
+    margin: 10pt 0;
+    border-style: solid;
+    border-color: #000000;
+    background-color: transparent;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    height: auto;
+}
+
+/* Estilo de enlaces */
+body:has(#print-toggle:checked) a {
+    color: #000000;
+    text-decoration: underline;
+}
+body:has(#print-toggle:checked) a::after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #333333;
 }

@@ -19,3 +19,79 @@
 .boton:hover {
     background: #5c7873;
 }
+
+/* Footer baja al final ignorando flotantes de otras hojas */
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+/* -------------------Estilos para la impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+/* Ocultar la URL por defecto */
+h3 {
+    display: none;
+}
+body:has(#print-toggle:checked) h3 {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+/* Activar fondo blanco y tipografía serif general en negro */
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Ocultar elementos de navegación principales */
+body:has(#print-toggle:checked) nav {
+    display: none;
+}
+
+/* Ajustar el bloque de botones del perfil a un formato de lista simple apto para papel */
+body:has(#print-toggle:checked) .boton {
+    border-width: 1pt;
+    border-style: solid;
+    border-color: #000000;
+    border-radius: 0;
+    width: auto;
+    padding: 10pt;
+    background: transparent;
+    text-align: left;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+body:has(#print-toggle:checked) .boton li {
+    margin-bottom: 10pt;
+    list-style-type: none;
+}
+
+/* Estilos para los enlaces */
+body:has(#print-toggle:checked) a {
+    color: #000000;
+    text-decoration: underline;
+}
+
+body:has(#print-toggle:checked) a::after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #333333;
+}

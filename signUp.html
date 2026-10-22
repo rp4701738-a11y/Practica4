@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- URL visible solo en modo impresión -->
+    <h3 id="url-impresion">URL: https://buscasa.gt.tc/signUp.html</h3>
+
     <nav>
         <ul>
             <li><a href="index.html" id="rgr"><span>Menú principal</span></a></li>
@@ -16,7 +19,7 @@
             <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
         </ul>
     </nav>
-      <nav>
+    <nav>
         <ul>
             <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
             <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
@@ -24,6 +27,13 @@
             <li><span for="cont" id="lol">Ambos:<input type="checkbox" id="amb"></span></li>
         </ul>
     </nav>
+
+    <!-- Checkbox para previsualizar el estilo de impresión en pantalla (CSS puro) -->
+    <input type="checkbox" id="print-toggle" style="display: none;">
+    <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
+        <u>Cambiar vista normal/impresión</u>
+    </label>
+
     <section id="signIn">
         <h1>Registro:</h1>
         <form action="index2.html">
@@ -35,10 +45,17 @@
             <br><br><label>Fecha de nacimiento: <input type="text" required></label>
             <br><br><label>Ciudad de residencia: <input type="text" ></label>
             <br><br><label>País de residencia: <input type="text" ></label>
-            <br><br><label>Foto: <input type="file" ></label>
-            <br><br><input type="submit">
+            <br><br><label id="foto">Foto: <input type="file" ></label>
+            <br><br><input type="submit" value="Enviar">
         </form>
         <p>Ya tienes una cuenta? <a href="signIn.html">Inicia sesión</a></p>
     </section>
+
+    <!-- Footer con aviso de derechos de uso -->
+    <footer>
+        <br><br>
+        <hr size="1px" align="center" color="black">
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+    </footer>
 </body>
 </html>

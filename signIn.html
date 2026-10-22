@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <h3 id="url-impresion">URL: https://buscasa.gt.tc/signIn.html</h3>
+
     <nav>
         <ul>
             <li><a href="index.html" id="rgr"><span>Menú principal</span></a></li>
@@ -16,7 +18,7 @@
             <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
         </ul>
     </nav>
-      <nav>
+    <nav>
         <ul>
             <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
             <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
@@ -24,14 +26,26 @@
             <li><span for="cont" id="lol">Ambos:<input type="checkbox" id="amb"></span></li>
         </ul>
     </nav>
+
+    <input type="checkbox" id="print-toggle" style="display: none;">
+    <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
+        <u>Cambiar vista normal/impresión</u>
+    </label>
+
     <section id="signIn">
         <h1>Iniciar sesión:</h1>
         <form action="index2.html">
             <label>Nombre de usuario: <input type="text" minlength="3" maxlength="15" pattern="[a-zA-Z0-9]" required></label>
             <br><br><label>Contraseña: <input type="password" pattern="[a-zA-Z0-9]-_" required></label>
-            <input type="submit">
+            <br><br><input type="submit" value="Enviar">
         </form>
         <p>No tienes una cuenta? <a href="signUp.html">Regístrate</a></p>
     </section>
+
+    <footer>
+        <br><br>
+        <hr size="1px" align="center" color="black">
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+    </footer>
 </body>
 </html>

@@ -4,7 +4,96 @@ p, input, label {
 }
 
 @media all and (width < 992px) {
-form{
+  form {
     transform: scale(0.9);
+  }
 }
+
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+/* ------------------Estilos para la impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+/* Ocultar la URL por defecto */
+h3 {
+    display: none;
+}
+body:has(#print-toggle:checked) h3 {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) form {
+    transform: none !important;
+}
+
+/* Forzar textos de etiquetas a negro y control de líneas */
+body:has(#print-toggle:checked) p,
+body:has(#print-toggle:checked) label,
+body:has(#print-toggle:checked) h2,
+body:has(#print-toggle:checked) footer p,
+body:has(#print-toggle:checked) th,
+body:has(#print-toggle:checked) td {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Quitar placeholders */
+body:has(#print-toggle:checked) input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]) {
+    color: transparent !important;
+}
+body:has(#print-toggle:checked) input::placeholder {
+    color: transparent !important;
+}
+body:has(#print-toggle:checked) textarea::placeholder {
+    color: transparent !important;
+}
+
+/* Estilizar la tabla para que sea clara al imprimir */
+body:has(#print-toggle:checked) table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 15pt 0;
+}
+
+body:has(#print-toggle:checked) th,
+body:has(#print-toggle:checked) td {
+    border: 1pt solid #000000;
+    padding: 8pt;
+    text-align: left;
+}
+
+/* Ocultar elementos de navegación */
+body:has(#print-toggle:checked) nav {
+    display: none;
+}
+body:has(#print-toggle:checked) input[type="submit"] {
+    display: none;
+}
+
+/* Aumentar separación y dar estilo de recuadro a los inputs para rellenar a mano cómodamente */
+body:has(#print-toggle:checked) input:not([type="checkbox"]):not([type="radio"]) {
+    margin-bottom: 10pt;
+    padding: 3pt;
+    border: 1pt solid #999;
+    background-color: #FFFFFF;
 }

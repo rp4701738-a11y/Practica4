@@ -24,23 +24,93 @@ section {
 }
 
 h2 {
-  color: #000;
+    color: #000;
 }
 
 body:has(#osc:checked){
-h2{
-  color: rgb(255, 255, 255);
-}
-section{
-  border-color: rgb(246, 245, 245);
-  }
-  hr{
-  color: rgb(246, 245, 245);
-  }
+    h2{
+        color: rgb(255, 255, 255);
+    }
+    section{
+        border-color: rgb(246, 245, 245);
+    }
+    hr{
+        color: rgb(246, 245, 245);
+    }
 }
 
 @media all and (width < 992px) {
-section{
-  transform: scale(0.9);
+    section{
+        transform: scale(0.9);
+    }
 }
+
+/* Footer baja al final ignorando el float: left de las secciones */
+footer {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+/* Ocultar la URL por defecto */
+h3 {
+    display: none;
+}
+
+/* --------------Estilos para impresión */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+body:has(#print-toggle:checked) h3 {
+    display: block;
+    color: #000000;
+    font-family: serif;
+    margin-bottom: 20px;
+}
+
+/* Fondo en blanco y texto en negro */
+body:has(#print-toggle:checked) {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: serif;
+    font-size: 12pt;
+}
+
+body:has(#print-toggle:checked) section {
+    transform: none !important;
+}
+
+body:has(#print-toggle:checked) h2,
+body:has(#print-toggle:checked) label,
+body:has(#print-toggle:checked) footer p {
+    color: #000000;
+    font-family: serif;
+    widows: 3;
+    orphans: 3;
+}
+
+/* Ocultar elementos interactivos (salvo el formulario de busqueda, que de eso va la pagina) */
+body:has(#print-toggle:checked) nav,
+body:has(#print-toggle:checked) #menu-principal,
+body:has(#print-toggle:checked) #boton-enviar {
+    display: none;
+}
+
+/* Adaptar las secciones del formulario para que se impriman correctamente */
+body:has(#print-toggle:checked) section {
+    border-width: 1pt;
+    padding: 10pt;
+    margin: 10pt 0;
+    border-style: solid;
+    border-color: #000000;
+    background-color: transparent;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    height: auto;
+    float: none;
+    display: block;
+    text-align: left;
 }

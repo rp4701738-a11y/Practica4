@@ -8,13 +8,16 @@
     <link rel="stylesheet" href="style/barraNav.css">
 </head>
 <body>
-        <nav>
+    <!-- URL visible solo en modo impresión[cite: 11] -->
+    <h3>URL: https://buscasa.gt.tc/anuncio.html</h3>
+
+    <nav>
         <ul>
             <li><a href="busqueda.html" id="rgr"><span>Busqueda </span></a></li>
-            <li><a href="partePrivada.html" id="rgr"><span></span>Perfil </span></a></li>
+            <li><a href="partePrivada.html" id="rgr"><span>Perfil </span></a></li>
         </ul>
     </nav>
-      <nav>
+    <nav>
         <ul>
             <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
             <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
@@ -22,9 +25,13 @@
             <li><span for="cont" id="lol">Ambos:<input type="checkbox" id="amb"></span></li>
         </ul>
     </nav>
-        <a href="pregunta.html" id="preg">Preguntar</a>
-    <section>
+    
+    <input type="checkbox" id="print-toggle" style="display: none;">
+    <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
+        <u>Cambiar vista normal/impresión</u>
+    </label>
 
+    <section>
         <form action="pregunta.html" class="lo">
             <button>Preguntar</button>
         </form>
@@ -35,5 +42,12 @@
         <p>Caribe</p><p>España</p>
         <p>20000$</p>
     </section>   
+
+    <!-- Footer con aviso de derechos de uso[cite: 11] -->
+    <footer>
+        <br><br>
+        <hr size="1px" align="center" color="black">
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+    </footer>
 </body>
 </html>

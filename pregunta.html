@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <ul>
+    <h3 id="url-impresion">URL: https://buscasa.gt.tc/pregunta.html</h3>
+
+    <ul id="menu-principal">
         <li><a href="index2.html" id="rgr"><span>Inicio</span></a></li>
         <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
         <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
     </ul>
-      <nav>
+    <nav>
         <ul>
             <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
             <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
@@ -24,12 +26,17 @@
         </ul>
     </nav>
 
+    <input type="checkbox" id="print-toggle" style="display: none;">
+    <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
+        <u>Cambiar vista normal/impresión</u>
+    </label>
+
     <form action="index.html">
         <h3>Tipo de pregunta: </h3>
         
         <div>
             <input type="radio" id="info" name="tipo-pregunta" value="Más información">
-            <label for="blanco-negro">Más información</label><br>
+            <label for="info">Más información</label><br>
             <input type="radio" id="cita" name="tipo-pregunta" value="Solicitar cita">
             <label for="cita">Solicitar cita</label><br>
             <input type="radio" id="oferta" name="tipo-pregunta" value="Comunicar una oferta">
@@ -37,12 +44,19 @@
         </div>
 
         <div>
-            <textarea name="textarea1" rows="4" cols="50" placeholder="Escribe tu pregunta..."></textarea>
+            <label for="textarea1">Tu pregunta:</label><br>
+            <textarea name="textarea1" id="textarea1" rows="4" cols="50" placeholder="Escribe tu pregunta..."></textarea>
         </div>
 
         <section>
-            <input type="submit">
+            <input type="submit" value="Enviar">
         </section>
     </form>
+
+    <footer>
+        <br><br>
+        <hr size="1px" align="center" color="black">
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+    </footer>
 </body>
 </html>

@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <h3>URL: https://buscasa.gt.tc/mensajes.html</h3>
+
     <ul>
         <li><a href="index2.html" id="rgr"><span>Menú principal</span></a></li>
         <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
         <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
     </ul>
-      <nav>
+    <nav>
         <ul>
             <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
             <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
@@ -24,7 +26,12 @@
         </ul>
     </nav>
     
-    <h3>Mensajes</h3>
+    <input type="checkbox" id="print-toggle" style="display: none;">
+    <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
+        <u>Cambiar vista normal/impresión</u>
+    </label>
+
+    <h2>Mensajes</h2>
 
     <div>
         <p>
@@ -61,5 +68,11 @@
             Si no es posible me podría especificar otra fecha.<br>
         </p>
     </div>
+
+    <footer>
+        <br><br>
+        <hr size="1px" align="center" color="black">
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+    </footer>
 </body>
 </html>
