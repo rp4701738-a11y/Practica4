@@ -18,7 +18,7 @@ section{
 }
 /*Para titulos*/
 h1 {
-  color: #08ffda;
+  color: #0026ff;
   font-family: "Monaco", monospace;
 }
 
@@ -35,6 +35,10 @@ p {
   font-family: "Georgia", serif;
 }
 
-@media all and (width > 1078) {
-
+@media all and (width < 1078px) {
+#signIn{
+  transform: scale(0.8);
+  transform-origin: top center;
+  left: 220px;
+}
 }

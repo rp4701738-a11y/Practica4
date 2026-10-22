@@ -23,6 +23,8 @@ p {
   color: #48b4f2;
   margin: 10px;
 }*/
-@media all and (width > 866px) {
-
+@media all and (width < 992px) {
+div{
+    transform: scale(0.9);
+}
 }

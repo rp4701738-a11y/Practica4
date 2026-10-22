@@ -38,3 +38,9 @@ section{
   color: rgb(246, 245, 245);
   }
 }
+
+@media all and (width < 992px) {
+section{
+  transform: scale(0.9);
+}
+}

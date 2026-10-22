@@ -24,3 +24,12 @@ p {
   color: #48b4f2;
   margin: 10px;
 }
+
+@media all and (width < 866px) {
+section{
+    transform: scale(0.8);
+}
+#preg{
+    left: 100px;
+}
+}

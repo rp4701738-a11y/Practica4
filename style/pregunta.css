@@ -20,3 +20,9 @@ label {
     font-family: "Georgia", serif;
     color: #48b4f2;
 }
+
+@media all and (width < 992px) {
+form{
+    transform: scale(0.9);
+}
+}

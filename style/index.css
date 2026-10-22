@@ -37,6 +37,11 @@ section{
     top: 10px;
     display: flex;
 }
-@media all and (width > 866px) {
-
+@media all and (width < 866px) {
+div {
+  transform: scale(0.8);
+}
+#iniciar-sesion{
+  transform: scale(0.8);
+}
 }

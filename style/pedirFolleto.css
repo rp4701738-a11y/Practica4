@@ -2,3 +2,9 @@ p, input, label {
   color: #48b4f2;
   font-family: "Georgia", serif;
 }
+
+@media all and (width < 992px) {
+form{
+    transform: scale(0.9);
+}
+}

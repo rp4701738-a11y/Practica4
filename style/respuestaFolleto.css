@@ -14,3 +14,12 @@ p {
     font-size: large;
     color: #48b4f2;
 }
+
+@media all and (width < 992px) {
+section{
+    transform: scale(0.9);
+}
+h3{
+    transform: scale(0.9);
+}
+}
