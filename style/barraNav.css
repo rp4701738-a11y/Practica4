@@ -42,3 +42,24 @@ ul li a{
   color: rgb(248, 244, 244);
   }
 }
+body:has(#letr:checked){
+  span{
+    font-size: large;
+  }
+  label{
+    font-size: 23px;
+  }
+}
+
+body:has(#cont:checked){
+  filter: contrast(1.85);
+}
+body:has(#amb:checked){
+  filter: contrast(1.85);
+  span{
+    font-size: large;
+  }
+  label{
+    font-size: 23px;
+  }
+}
