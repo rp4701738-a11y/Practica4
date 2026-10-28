@@ -34,10 +34,10 @@
 
     <section id="signIn">
         <h1>Iniciar sesión:</h1>
-        <form action="index2.html">
-            <label>Nombre de usuario: <input type="text" minlength="3" maxlength="15" pattern="[a-zA-Z0-9]" required></label>
-            <br><br><label>Contraseña: <input type="password" pattern="[a-zA-Z0-9]-_" required></label>
-            <br><br><input type="submit" value="Enviar">
+        <form >
+            <label>Nombre de usuario: <input type="text" id="nu"><p id="l"></p></label>
+            <br><br><label>Contraseña: <input type="text" onkeyup='nover( this )' id="ct"><p id="m"></p></label>
+            <br><br><input type="button" value="Enviar" onclick="cambio()">
         </form>
         <p>No tienes una cuenta? <a href="signUp.html">Regístrate</a></p>
     </section>
@@ -47,5 +47,6 @@
         <hr size="1px" align="center" color="black">
         <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
+    <script src="javascript/signIn.js"></script>
 </body>
 </html>
