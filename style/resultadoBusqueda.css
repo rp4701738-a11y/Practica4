@@ -3,6 +3,18 @@ footer {
     width: 100%;
     display: block;
 }
+body:has(#osc:checked){
+    section{
+        background-color: white;
+        color: rgb(106, 102, 102);
+    }
+    p{
+        color: black;
+    }
+    label{
+        color: white;
+    }
+}
 
 @media all and (width < 992px) {
     section{

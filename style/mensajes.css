@@ -79,3 +79,8 @@ body:has(#print-toggle:checked) div {
     break-inside: avoid;
     height: auto;
 }
+body:has(#osc:checked){
+    p{
+        color: white;
+    }
+}

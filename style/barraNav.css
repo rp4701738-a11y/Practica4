@@ -26,20 +26,23 @@ ul li a:hover {
 body:has(#osc:checked){
 background-color: black;
 color: white;
-h1 {
-    color: #d6dede;
-}
-label{
-    color: #f7f7f7;
-}
-ul{
-  background-color: gray;
-}
-ul li a{
-  color: white;
-}
-#lol{
-  color: rgb(248, 244, 244);
+  h1 {
+      color: #d6dede;
+  }
+  label{
+      color: #f7f7f7;
+  }
+  ul{
+    background-color: gray;
+  }
+  ul li a{
+    color: white;
+  }
+  #lol{
+    color: rgb(248, 244, 244);
+  }
+  u{
+    color: white;
   }
 }
 body:has(#letr:checked){
@@ -48,6 +51,21 @@ body:has(#letr:checked){
   }
   label{
     font-size: 23px;
+  }
+  input::placeholder {
+    font-size: 20px;
+  }
+  input {
+      font-size: 20px;
+  }
+  p{
+      font-size: 18px;
+  }
+  th{
+      font-size: 18px;
+  }
+  td{
+      font-size: 18px;
   }
 }
 
@@ -62,4 +80,10 @@ body:has(#amb:checked){
   label{
     font-size: 23px;
   }
+  input::placeholder {
+    font-size: 20px;
+}
+input {
+    font-size: 20px;
+}
 }

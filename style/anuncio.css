@@ -11,7 +11,7 @@ section{
     top: 30px;
     left: 60px;
     position: relative;
-    background-color: #5c7873;
+    background-color: #70a99f;
 } 
 
 #preg{
@@ -23,7 +23,7 @@ section{
 
 p {
     font-family: "Georgia", serif;
-    color: #48b4f2;
+  color: #0571b0;
     margin: 10px;
 }
 
@@ -33,6 +33,18 @@ p {
     }
     #preg{
         left: 100px;
+    }
+}
+body:has(#osc:checked){
+    section{
+        background-color: white;
+        color: rgb(106, 102, 102);
+    }
+    p{
+        color: black;
+    }
+    label{
+        color: white;
     }
 }
 
@@ -48,7 +60,7 @@ h3 {
     display: none;
 }
 
-/* Estilos para la vista de impresión */
+/* ---------------------------Estilos para la vista de impresión */
 
 @page {
     size: A4;
