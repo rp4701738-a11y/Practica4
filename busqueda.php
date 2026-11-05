@@ -1,3 +1,43 @@
+<?php
+
+$ciudad = $_GET['ciudad'] ?? '';
+
+$anuncios = [
+    [
+        "id" => 1,
+        "titulo" => "Casa en el Caribe",
+        "fecha" => "20 de diciembre de 2025",
+        "ciudad" => "Caribe",
+        "pais" => "España",
+        "precio" => "20000$",
+        "imagen" => "imagenes/casa1.jpeg"
+    ],
+    [
+        "id" => 2,
+        "titulo" => "Apartamento en Murcia",
+        "fecha" => "28 de diciembre de 2024",
+        "ciudad" => "Murcia",
+        "pais" => "España",
+        "precio" => "15000$",
+        "imagen" => "imagenes/apartamento1.jpeg"
+    ]
+];
+
+// Filtrar exclusivamente por ciudad
+$resultados = [];
+
+foreach ($anuncios as $anuncio) {
+
+    if (
+        $ciudad == '' ||
+        strcasecmp($anuncio['ciudad'], trim($ciudad)) == 0
+    ) {
+        $resultados[] = $anuncio;
+    }
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +49,12 @@
     <link rel="stylesheet" href="style/titulos.css">
 </head>
 <body>
-    <h3>URL: https://buscasa.gt.tc/busqueda.html</h3>
+    <h3>URL: https://buscasa.gt.tc/busqueda.php</h3>
 
     <ul id="menu-principal">
-        <li><a href="index.html" id="rgr"><span>Menú principal</span></a></li>
-        <li><a href="signUp.html" id="lgn"><span>Registrarse</span></a></li>
-        <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+        <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
+        <li><a href="signUp.php" id="lgn"><span>Registrarse</span></a></li>
+        <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
     </ul>
     <nav>
         <ul>
@@ -33,7 +73,7 @@
     <h2>Búsqueda avanzada</h2>
     <hr size="3" color="black">
     
-    <form action="resultadoBusqueda.html">    
+    <form action="resultadoBusqueda.php" method="GET">    
         <section>
             <label>Tipo de venta:</label>
             <input type="radio" id="venta" name="tipo-venta" value="Venta">
@@ -87,7 +127,9 @@
                 <option value="Uruguay">
                 <option value="Venezuela">
             </datalist><br>
-            <label>Ciudad: <input type="text"></label>
+            <label>
+                Ciudad: <input type="text" name="ciudad">
+            </label>        
         </section>
 
         <section id="boton-enviar">

@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h3 id="url-impresion">URL: https://buscasa.gt.tc/pregunta.html</h3>
+    <h3 id="url-impresion">URL: https://buscasa.gt.tc/pregunta.php</h3>
 
     <ul id="menu-principal">
-        <li><a href="index2.html" id="rgr"><span>Inicio</span></a></li>
-        <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
-        <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+        <li><a href="index2.php" id="rgr"><span>Inicio</span></a></li>
+        <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+        <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
     </ul>
     <nav>
         <ul>
@@ -30,8 +30,20 @@
     <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
         <u>Cambiar vista normal/impresión</u>
     </label>
+    <?php
+            $website = "";
+            if ($_SERVER["REQUEST_METHOD"] == "POST"){
+                $website = test_input($_POST["textarea"]);
+                $tipo = test_input($_POST["tipo-pregunta"]);
+                }
 
-    <form action="index.html">
+                function test_input($data) {
+                $data = trim($data);
+                return $data;
+                }
+            
+        ?>
+    <form action="index.php">
         <h3>Tipo de pregunta: </h3>
         
         <div>
@@ -53,6 +65,11 @@
         </section>
     </form>
 
+    <?php
+        if($website == "" || $tipo == "" || ($tipo == "Solicitar cita" || $tipo == "Comunicar una oferta")){
+            
+        }
+    ?>
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">

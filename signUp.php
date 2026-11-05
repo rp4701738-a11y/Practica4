@@ -18,9 +18,9 @@
 
     <nav>
         <ul>
-            <li><a href="index.html" id="rgr"><span>Menú principal</span></a></li>
-            <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
-            <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+            <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
+            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
         </ul>
     </nav>
     <nav>
@@ -39,7 +39,7 @@
 
     <section id="signIn">
         <h1>Registro:</h1>
-        <form id="signupForm" action="index2.html">
+        <form id="signupForm" action="index2.php">
             <!-- Cada input recibe un 'id' que coincida con el JavaScript -->
             <label>Nombre de usuario: <input type="text" id="username" name="username"></label>
             <span id="err-username" class="error-msg"></span>
@@ -65,7 +65,7 @@
             
             <br><br><input type="submit" value="Enviar">
         </form>
-        <p>Ya tienes una cuenta? <a href="signIn.html">Inicia sesión</a></p>
+        <p>Ya tienes una cuenta? <a href="signIn.php">Inicia sesión</a></p>
     </section>
 
     <footer>

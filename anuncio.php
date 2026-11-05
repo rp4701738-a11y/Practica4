@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado</title>
-    <link rel="stylesheet" href="style/sectionP.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/anuncio.css">
     <link rel="stylesheet" href="style/barraNav.css">
-    <link rel="stylesheet" href="style/resultadoBusqueda.css">
 </head>
 <body>
-    <h3 id="url-impresion">URL: https://buscasa.gt.tc/resultadoBusqueda.html</h3>
+    <!-- URL visible solo en modo impresión[cite: 11] -->
+    <h3>URL: https://buscasa.gt.tc/anuncio.php</h3>
 
-    <ul id="menu-principal">
-        <li><a href="index.html" id="rgr"><span>Menú principal</span></a></li>
-        <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
-        <li><a href="signIn.html" id="lgn"><span>Registrarse</span></a></li>
-        <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
-    </ul>
+    <nav>
+        <ul>
+            <li><a href="busqueda.php" id="rgr"><span>Busqueda </span></a></li>
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil </span></a></li>
+        </ul>
+    </nav>
     <nav>
         <ul>
             <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
@@ -25,31 +25,25 @@
             <li><span for="cont" id="lol">Ambos:<input type="checkbox" id="amb"></span></li>
         </ul>
     </nav>
-
+    
     <input type="checkbox" id="print-toggle" style="display: none;">
     <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
         <u>Cambiar vista normal/impresión</u>
     </label>
 
-    <h2>Resultados de la búsqueda</h2>
-    <hr size="1px" align="left" color="black">
-    <br><br>
-
     <section>
-        <a href="anuncio.html"><img src="imagenes/casa1.jpeg"></a>
+        <form action="pregunta.php" class="lo">
+            <button>Preguntar</button>
+        </form>
+        
+        <br><img src="imagenes/casa1.jpeg">
         <p>Casa en el Caribe</p>
         <p>20 de diciembre de 2025</p>
-        <p>Caribe</p><p>España</p> 
+        <p>Caribe</p><p>España</p>
         <p>20000$</p>
-    </section>
-    <section>
-        <a href="error.html"><img src="imagenes/apartamento1.jpeg"></a>
-        <p>Apartamento en Murcia</p>
-        <p>28 de diciembre de 2024</p>
-        <p>Murcia</p><p>España</p> 
-        <p>15000$</p>
-    </section>
+    </section>   
 
+    <!-- Footer con aviso de derechos de uso[cite: 11] -->
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">

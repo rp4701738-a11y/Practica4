@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
-    <link rel="stylesheet" href="style/signUp.css">
+    <title>Respuesta</title>
     <link rel="stylesheet" href="style/barraNav.css">
+    <link rel="stylesheet" href="style/titulos.css">
+    <link rel="stylesheet" href="style/respuestaFolleto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h3 id="url-impresion">URL: https://buscasa.gt.tc/signIn.html</h3>
+    <h3 id="url-impresion">URL: https://buscasa.gt.tc/respuestaFolleto.php</h3>
 
     <nav>
         <ul>
-            <li><a href="index.html" id="rgr"><span>Menú principal</span></a></li>
-            <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
-            <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+            <li><a href="index2.php" id="rgr"><span>Menú principal</span></a></li>
+            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
         </ul>
     </nav>
     <nav>
@@ -32,14 +33,28 @@
         <u>Cambiar vista normal/impresión</u>
     </label>
 
-    <section id="signIn">
-        <h1>Iniciar sesión:</h1>
-        <form >
-            <label>Nombre de usuario: <input type="text" id="nu"><p id="l"></p></label>
-            <br><br><label>Contraseña: <input type="text" onkeyup='nover( this )' id="ct"><p id="m"></p></label>
-            <br><br><input type="button" value="Enviar" onclick="cambio()">
-        </form>
-        <p>No tienes una cuenta? <a href="signUp.html">Regístrate</a></p>
+    <h3>Resumen del folleto:</h3>
+
+    <section>
+        <p>
+            ----Resumen-----------
+            <br>Una casa de dos pisos cerca de la playa con aire acondicionado y calefación instalada
+        </p>
+        <br><p>
+            ----Contacto------------
+            <br>Nombre: Jhon Doe
+            <br>email: jhodo234@gmail.com
+            <br>numero: 627834666
+        </p>
+        <br><p>
+            ----Datos del folleto---
+            <br>Color de fondo: "#000000"
+            <br>N de copias: 5
+            <br>Resolución: 300 DPI
+            <br>Fecha: 12/9/26
+            <br>Color: Blanco y negro
+        </p>
+        <br><p>Precio total: 20$</p>
     </section>
 
     <footer>
@@ -47,6 +62,5 @@
         <hr size="1px" align="center" color="black">
         <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
-    <script src="javascript/signIn.js"></script>
 </body>
 </html>

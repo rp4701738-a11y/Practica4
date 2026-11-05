@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+
+    header("Location: index.php");
+    exit();
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +25,8 @@
 
     <nav>
         <ul>
-            <li><a href="index2.html" id="rgr"><span>Menú principal</span></a></li>
-            <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
+            <li><a href="index2.php" id="rgr"><span>Menú principal</span></a></li>
+            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
         </ul>
         <ul>
             <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
@@ -32,9 +44,9 @@
     <ul class="boton">
         <li><a href=""><span>Mis datos</span></a></li>
         <li><a href=""><span>Darme de baja</span></a></li>
-        <li><a href=""><span>Mis anuncios</span></a></li>
-        <li><a href="pedirFolleto.html"><span>Diseñar folleto publicitario</span></a></li>
-        <li><a href="mensajes.html"><span>Mis mensajes</span></a></li>
+        <li><a href="misAnuncios.php"><span>Mis anuncios</span></a></li>
+        <li><a href="pedirFolleto.php"><span>Diseñar folleto publicitario</span></a></li>
+        <li><a href="mensajes.php"><span>Mis mensajes</span></a></li>
     </ul>
 
     <footer>

@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="style/barraNav.css">
 </head>
 <body>
-    <h3>URL: https://buscasa.gt.tc.index2.html</h3>
+    <h3>URL: https://buscasa.gt.tc.index2.php</h3>
     <nav>
         <ul>
-            <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
-            <li><a href="partePrivada.html" id="rgr"><span>Perfil </span></a></li>
+            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil </span></a></li>
         </ul>
     </nav>
       <nav>
@@ -40,10 +40,10 @@
         <br><br>
 
         <section>
-            <a href="anuncio.html"><img src="imagenes/casa1.jpeg"></a><p>Casa en el Caribe</p>
+            <a href="anuncio.php"><img src="imagenes/casa1.jpeg"></a><p>Casa en el Caribe</p>
         </section>
         <section>
-            <a href="error.html"><img src="imagenes/apartamento1.jpeg"></a><p>Apartamento en Murcia</p>
+            <a href="error.php"><img src="imagenes/apartamento1.jpeg"></a><p>Apartamento en Murcia</p>
         </section>
     </div>
 

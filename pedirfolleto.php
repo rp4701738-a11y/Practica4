@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h3>URL: https://buscasa.gt.tc/pedirFolleto.html</h3>
+    <h3>URL: https://buscasa.gt.tc/pedirFolleto.php</h3>
 
     <nav>
         <ul>
-            <li><a href="index2.html" id="rgr"><span>Menú principal</span></a></li>
-            <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
-            <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+            <li><a href="index2.php" id="rgr"><span>Menú principal</span></a></li>
+            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
         </ul>
     </nav>
     <nav>
@@ -36,7 +36,7 @@
     <h2>Diseña tu folleto</h2>
     <hr size="1px" align="left" color="black">
 
-    <form action="respuestaFolleto.html">
+    <form action="respuestaFolleto.php">
         <br>
         <p>Esta página sirve para diseñar un folleto publicitario de tu anuncio, el cual podrás imprimir y colgar por ahí.</p>
         <label>Tarifas:</label>
@@ -67,12 +67,146 @@
             </tr>
         </table>
 
-        <br><button id="tr" onclick="mostrar()">Ver costes</button>
-        <section id="tb">
-        <br><table id="ta">
-            
-        </table>
-        </section>
+        
+<?php
+
+function cal($m, $i) {
+    $n = 2;
+    $q = 1.8;
+    $p = 1.6;
+
+    if ($i == 0) {
+        return $m;
+    }
+
+    if ($i < 4) {
+        $m += $n;
+    } elseif ($i < 10) {
+        $m += $q;
+    } else {
+        $m += $p;
+    }
+
+    return round($m, 2);
+}
+
+function cal1($m, $i) {
+    $n = 2.6;
+    $q = 2.4;
+    $p = 2.2;
+
+    if ($i == 0) {
+        return $m;
+    }
+
+    if ($i < 4) {
+        $m += $n;
+    } elseif ($i < 10) {
+        $m += $q;
+    } else {
+        $m += $p;
+    }
+
+    return round($m, 2);
+}
+
+function cal2($m, $i) {
+    $n = 3.5;
+    $q = 3.3;
+    $p = 3.1;
+
+    if ($i == 0) {
+        return $m;
+    }
+
+    if ($i < 4) {
+        $m += $n;
+    } elseif ($i < 10) {
+        $m += $q;
+    } else {
+        $m += $p;
+    }
+
+    return round($m, 2);
+}
+
+function cal3($m, $i) {
+    $n = 4.1;
+    $q = 3.9;
+    $p = 3.7;
+
+    if ($i == 0) {
+        return $m;
+    }
+
+    if ($i < 4) {
+        $m += $n;
+    } elseif ($i < 10) {
+        $m += $q;
+    } else {
+        $m += $p;
+    }
+
+    return round($m, 2);
+}
+
+?>
+
+<button id="tr" onclick="mostrar()">Ver costes</button>
+
+<section id="tb">
+    <br>
+
+    <table id="ta" border="1">
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td colspan="2">Blanco y negro</td>
+            <td colspan="2">Color</td>
+        </tr>
+
+        <tr>
+            <td>N de <br> páginas</td>
+            <td>N de <br> fotos</td>
+            <td>150-300 dpi</td>
+            <td>450-900 dpi</td>
+            <td>150-300 dpi</td>
+            <td>450-900 dpi</td>
+        </tr>
+
+        <?php
+
+        $m = 12;
+        $n = 12.6;
+        $j = 13.5;
+        $p = 14.1;
+
+        for ($i = 0; $i < 15; $i++) {
+
+            echo "<tr>";
+
+            echo "<td>" . ($i + 1) . "</td>";
+            echo "<td>" . (($i + 1) * 3) . "</td>";
+
+            echo "<td>" . cal($m, $i) . "€</td>";
+            echo "<td>" . cal1($n, $i) . "€</td>";
+            echo "<td>" . cal2($j, $i) . "€</td>";
+            echo "<td>" . cal3($p, $i) . "€</td>";
+
+            echo "</tr>";
+
+            $m = cal($m, $i);
+            $n = cal1($n, $i);
+            $j = cal2($j, $i);
+            $p = cal3($p, $i);
+        }
+
+        ?>
+
+    </table>
+</section>
+
 
         <br><label>Resumen del anuncio: <br><textarea name="textarea1" rows="4" cols="50" max="4000"></textarea></label>
 

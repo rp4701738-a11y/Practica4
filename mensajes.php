@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h3>URL: https://buscasa.gt.tc/mensajes.html</h3>
+    <h3>URL: https://buscasa.gt.tc/mensajes.php</h3>
 
     <ul>
-        <li><a href="index2.html" id="rgr"><span>Menú principal</span></a></li>
-        <li><a href="busqueda.html" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
-        <li><a href="partePrivada.html" id="rgr"><span>Perfil</span></a></li>
+        <li><a href="index2.php" id="rgr"><span>Menú principal</span></a></li>
+        <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
+        <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
     </ul>
     <nav>
         <ul>
