@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style/barraNav.css">
     <link rel="stylesheet" href="style/index.css">
     <link rel="stylesheet" href="style/titulos.css">
+    <script src="javascript/index.js"></script>
 </head>
 <body>
     <h3>URL: https://buscasa.gt.tc.index.html</h3>
@@ -28,12 +29,16 @@
             </ul>
         </nav>
         <section id="iniciar-sesion">
-            <form action="index2.html">
+            <form id="loginForm" action="index2.html">
                 <h4>Iniciar sesión</h4>
-                <label>Nombre de usuario: <input type="text"></label><br>
-                <label>Contraseña: <input type="password"></label>
+                <label>Nombre de usuario: <input type="text" id="loginUser" name="loginUser"></label>
+                <span id="err-loginUser" class="error-msg"></span><br>
+                
+                <label>Contraseña: <input type="password" id="loginPass" name="loginPass"></label>
+                <span id="err-loginPass" class="error-msg"></span>
                 <br><br>
-                <input type="submit">
+                
+                <input type="submit" value="Enviar">
             </form>
         </section>
         <br><br><br>
