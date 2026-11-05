@@ -96,6 +96,9 @@ function validarEdad(fecha) {
 }
 
 function validarForm(evento) {
+
+    // Comentado temporalmente para validaciones PHP
+    /*
     evento.preventDefault(); 
 
     limpiarErr();
@@ -156,6 +159,8 @@ function validarForm(evento) {
     if (esValido === true) {
         evento.target.submit();
     }
+
+    */
 }
 
 document.addEventListener("DOMContentLoaded", function() {

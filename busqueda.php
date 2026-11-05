@@ -23,7 +23,6 @@ $anuncios = [
     ]
 ];
 
-// Filtrar exclusivamente por ciudad
 $resultados = [];
 
 foreach ($anuncios as $anuncio) {

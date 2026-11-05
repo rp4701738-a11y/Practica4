@@ -39,7 +39,7 @@
 
     <section id="signIn">
         <h1>Registro:</h1>
-        <form id="signupForm" action="index2.php">
+        <form id="signupForm" action="signUpRespuesta.php" method="post">
             <!-- Cada input recibe un 'id' que coincida con el JavaScript -->
             <label>Nombre de usuario: <input type="text" id="username" name="username"></label>
             <span id="err-username" class="error-msg"></span>
