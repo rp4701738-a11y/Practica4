@@ -36,7 +36,7 @@
     <h2>Diseña tu folleto</h2>
     <hr size="1px" align="left" color="black">
 
-    <form action="respuestaFolleto.php">
+    <form action="respuestaFolleto.php" method="POST">        
         <br>
         <p>Esta página sirve para diseñar un folleto publicitario de tu anuncio, el cual podrás imprimir y colgar por ahí.</p>
         <label>Tarifas:</label>
@@ -211,46 +211,104 @@ function cal3($m, $i) {
         <br><label>Resumen del anuncio: <br><textarea name="textarea1" rows="4" cols="50" max="4000"></textarea></label>
 
         <br><br><label>Tus datos:</label><br>
-        <label>Nombre y apellido: <input type="text" max="200" required ></label><br>
-        <label>Email: <input type="email" required max="200"></label><br>
-        <label>Teléfono de contacto: <input type="number"></label><br>
+        <label>Nombre y apellido:
+        <input type="text" name="nombre" maxlength="200" required>
+        </label><br>
+
+        <label>Email:
+            <input type="email" name="email" maxlength="200" required>
+        </label><br>
+
+        <label>Teléfono de contacto:
+            <input type="tel" name="telefono">
+        </label><br>
 
         <br>
         <br>
         <label>Dirección del anuncio:</label>
         <br>
-        <label>Calle: <input type="text" required></label><br>
-        <label>Número: <input type="text" required></label><br>
-        <label>Piso: <input type="text" required></label><br>
-        <label>Puerta: <input type="text" required></label><br>
-        <label>Código postal: <input type="text" required></label><br>
-        <label>Localidad: <input type="text" required></label><br>
-        <label>Provincia: <input type="text" required></label><br>
-        <label>País: <input type="text" required></label><br>
+        <label>Calle:
+        <input type="text" name="calle" required>
+        </label><br>
+
+        <label>Número:
+            <input type="text" name="numero" required>
+        </label><br>
+
+        <label>Piso:
+            <input type="text" name="piso" required>
+        </label><br>
+
+        <label>Puerta:
+            <input type="text" name="puerta" required>
+        </label><br>
+
+        <label>Código postal:
+            <input type="text" name="codigo_postal" required>
+        </label><br>
+
+        <label>Localidad:
+            <input type="text" name="localidad" required>
+        </label><br>
+
+        <label>Provincia:
+            <input type="text" name="provincia" required>
+        </label><br>
+
+        <label>País:
+            <input type="text" name="pais" required>
+        </label>
         <br>
         <br>
 
-        <label>Color de la portada: <input type="color" value="#000000" required></label>
-        <br><label>Número de copias: <input type="number" value="1" min="1" max="99" required></label>
-        <br><label>Resolución de las fotos: <input type="number" step="150" value="150" min="150" max="900" required>DPI</label>
+        <label>Color de la portada:
+        <input type="color" name="color_portada" value="#000000" required>
+        </label><br>
 
+        <label>Número de copias:
+            <input type="number" name="copias" value="1" min="1" max="99" required>
+        </label><br>
+
+        <label>Resolución de las fotos:
+            <input type="number" name="resolucion" step="150"
+                value="150" min="150" max="900" required>
+            DPI
+        </label>
+        <br>
         <br><label for="anuncio">Anuncio:</label>
         <input list="anuncios" name="anuncio" id="anuncio" required>
+
         <datalist id="anuncios">
             <option value="Piso en Alicante">
             <option value="Casa rural de Crevillente">
             <option value="Apartamento en Elda">
         </datalist>
 
-        <br><label>¿Cuándo quiere recibir el envió postal?: <input type="date"></label>
-        
-        <br><label>¿Impresión a color o en blanco y negro?:</label>
-        <br><input type="radio" id="blanco-negro" name="color" value="Blanco y negro">
-        <label for="blanco-negro">Blanco y negro</label><br>
-        <input type="radio" id="a-color" name="color" value="A color">
-        <label for="a-color">A color</label><br>
+        <br>
 
-        <br><label>¿Añadir el precio en el anuncio?: <input type="checkbox"></label><br><br>
+        <label>¿Cuándo quiere recibir el envío postal?:
+            <input type="date" name="fecha">
+        </label>
+        
+        <label>¿Impresión a color o en blanco y negro?</label>
+
+        <br>
+
+        <input type="radio" id="blanco-negro"
+            name="color" value="Blanco y negro" required>
+
+        <label for="blanco-negro">Blanco y negro</label>
+
+        <br>
+
+        <input type="radio" id="a-color"
+            name="color" value="A color">
+
+        <label for="a-color">A color</label>
+
+        <br><label>¿Añadir el precio en el anuncio?:
+        <input type="checkbox" name="precio_anuncio" value="Sí">
+        </label><br><br>
         <input type="submit" value="Enviar">
     </form>
 
