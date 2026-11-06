@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style/barraNav.css">
 </head>
 <body>
-    <!-- URL visible solo en modo impresión[cite: 11] -->
     <h3>URL: https://buscasa.gt.tc/anuncio.php</h3>
 
     <nav>
@@ -43,7 +42,6 @@
         <p>20000$</p>
     </section>   
 
-    <!-- Footer con aviso de derechos de uso[cite: 11] -->
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
