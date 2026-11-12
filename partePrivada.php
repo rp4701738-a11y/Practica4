@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -69,6 +71,22 @@
            style="display:block; margin-bottom:10px; color:black; cursor:pointer; clear:both;">
         <u>Cambiar vista normal/impresión</u>
     </label>
+
+    <?php
+    date_default_timezone_set('Europe/Madrid');
+
+    $hora = (int) date('H');
+    $usuario = $_SESSION['usuario'] ?? "Usuario";
+    if ($hora >= 6 && $hora < 12) {
+        echo "Buenos días, " . $usuario;
+    } elseif ($hora >= 12 && $hora < 16) {
+        echo "Hola, " . $usuario;
+    }elseif ($hora >= 16 && $hora < 20) {
+        echo "Buenas tardes, ";
+    } else {
+        echo "Buenas noches, ";
+    }
+    ?>
 
     <ul class="boton">
 

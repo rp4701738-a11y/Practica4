@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "permitidos.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -28,6 +29,7 @@ foreach ($usuarios as $datos) {
 
 if ($accesoPermitido) {
     header("Location: partePrivada.php");
+    $_SESSION["usuario"] = $datos["usuario"];
     exit();
 } else {
     header("Location: index.php?error=incorrecto");
