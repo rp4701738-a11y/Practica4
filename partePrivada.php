@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -73,21 +70,41 @@ session_start();
     </label>
 
     <?php
-    date_default_timezone_set('Europe/Madrid');
+session_start();
 
-    $hora = (int) date('H');
-    $usuario = $_SESSION['usuario'] ?? "Usuario";
-    if ($hora >= 6 && $hora < 12) {
-        echo "Buenos días, " . $usuario;
-    } elseif ($hora >= 12 && $hora < 16) {
-        echo "Hola, " . $usuario;
-    }elseif ($hora >= 16 && $hora < 20) {
-        echo "Buenas tardes, ";
-    } else {
-        echo "Buenas noches, ";
-    }
-    ?>
+date_default_timezone_set('Europe/Madrid');
 
+$usuario = $_SESSION["usuario"] ?? "Usuario";
+
+$hora = (int) date('H');
+
+if ($hora >= 6 && $hora < 12) {
+    $saludo = "Buenos días";
+} elseif ($hora >= 12 && $hora < 16) {
+    $saludo = "Hola";
+} elseif ($hora >= 16 && $hora < 20) {
+    $saludo = "Buenas tardes";
+} else {
+    $saludo = "Buenas noches";
+}
+
+echo "<h2>" . $saludo . ", "
+    . htmlspecialchars($usuario) . "</h2>";
+?>
+    <?php
+
+if (isset($_POST['salir'])) {
+    session_unset();
+    session_destroy();
+
+    header("Location: index.php");
+    exit();
+}
+?>
+
+<form method="POST">
+    <button type="submit" name="salir">Salir</button>
+</form>
     <ul class="boton">
 
         <li><a href=""><span>Mis datos</span></a></li>

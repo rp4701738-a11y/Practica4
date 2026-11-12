@@ -28,8 +28,8 @@ foreach ($usuarios as $datos) {
 }
 
 if ($accesoPermitido) {
-    header("Location: partePrivada.php");
     $_SESSION["usuario"] = $datos["usuario"];
+    header("Location: partePrivada.php");
     exit();
 } else {
     header("Location: index.php?error=incorrecto");
