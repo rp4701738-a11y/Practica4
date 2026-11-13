@@ -1,6 +1,19 @@
 <?php
 require_once "permitidos.php";
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST" && empty($_COOKIE["recordar_token"])) {
+    unset(
+        $_SESSION["usuario"],
+        $_SESSION["nombre"],
+        $_SESSION["estilos"],
+        $_SESSION["estilo"],
+        $_SESSION["recordado"],
+        $_SESSION["ultima_visita"]
+    );
+}
+
 $errorFlash = obtenerFlash("error");
+$esRecordado = !empty($_COOKIE["recordar_token"]) && isset($_SESSION["usuario"]);
 session_write_close();
 ?>
 <!DOCTYPE html>
@@ -19,9 +32,11 @@ session_write_close();
         <ul>
             <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
             <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
-            <?php if (isset($_SESSION["usuario"])): ?>
-                <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
+            <?php if ($esRecordado): ?>
+                <li><a href="partePrivada.php" id="rgr"><span>Perfil (<?= obtenerSaludo() ?>)</span></a></li>
                 <li><a href="signIn.php?salir=1" id="lgn"><span>Salir</span></a></li>
+            <?php else: ?>
+                <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
             <?php endif; ?>
         </ul>
     </nav>
@@ -34,8 +49,8 @@ session_write_close();
     </label>
 
     <section id="signIn">
-        <?php if (isset($_SESSION["usuario"])): ?>
-            <h1>Sesión activa</h1>
+        <?php if ($esRecordado): ?>
+            <h1>Sesión recordada</h1>
             <p>
                 Hola <strong><?= htmlspecialchars($_SESSION["nombre"] ?? $_SESSION["usuario"]) ?></strong>,
                 su última visita fue el <strong><?= htmlspecialchars($_SESSION["ultima_visita"] ?? date("d/m/y \a \l\a\s H:i")) ?></strong>
@@ -67,7 +82,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

@@ -53,11 +53,22 @@ session_write_close();
             Si no es posible me podría especificar otra fecha.<br>
         </p>
     </div>
+    <div>
+        <p>
+            Tipo: Solicitar una cita <br>
+            Fecha: 25/03/26 <br>
+            Usuario: Emily Lorial
+        </p>
+        <p class="negro">
+            Mensaje: Buenos días, ¿podría ir el 27 de mayo sobre las 13:00 para ver un poco la casa?<br>
+            Si no es posible me podría especificar otra fecha.<br>
+        </p>
+    </div>
 
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

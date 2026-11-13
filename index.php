@@ -1,6 +1,20 @@
 <?php
 require_once "permitidos.php";
+
+// Si se accede a index.php sin tener activa la cookie de "Recordarme", se limpia la sesión activa para que no quede guardada tras cerrar y volver a entrar
+if ($_SERVER["REQUEST_METHOD"] !== "POST" && empty($_COOKIE["recordar_token"])) {
+    unset(
+        $_SESSION["usuario"],
+        $_SESSION["nombre"],
+        $_SESSION["estilos"],
+        $_SESSION["estilo"],
+        $_SESSION["recordado"],
+        $_SESSION["ultima_visita"]
+    );
+}
+
 $errorFlash = obtenerFlash("error");
+$esRecordado = !empty($_COOKIE["recordar_token"]) && isset($_SESSION["usuario"]);
 session_write_close();
 ?>
 <!DOCTYPE html>
@@ -23,15 +37,15 @@ session_write_close();
                     <span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span>
                 </a>
             </li>
-            <?php if (!isset($_SESSION["usuario"])): ?>
-                <li>
-                    <a href="signIn.php" id="lgn">
-                        <span>Iniciar sesión</span>
-                    </a>
-                </li>
+            <?php if (!$esRecordado): ?>
                 <li>
                     <a href="signUp.php" id="lgn">
                         <span>Registrarse</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="partePrivada.php" id="rgr">
+                        <span>Perfil</span>
                     </a>
                 </li>
             <?php else: ?>
@@ -51,7 +65,7 @@ session_write_close();
         <?php mostrarBarraEstilos(); ?>
 
         <section id="iniciar-sesion">
-            <?php if (isset($_SESSION["usuario"])): ?>
+            <?php if ($esRecordado): ?>
                 <p>
                     Hola <strong><?= htmlspecialchars($_SESSION["nombre"] ?? $_SESSION["usuario"]) ?></strong>,
                     su última visita fue el <strong><?= htmlspecialchars($_SESSION["ultima_visita"] ?? date("d/m/y \a \l\a\s H:i")) ?></strong>
@@ -65,13 +79,13 @@ session_write_close();
             <?php else: ?>
                 <form action="controlAcc.php" method="POST" novalidate>
                     <label for="loginUser">Usuario:</label>
-                    <input type="text" id="loginUser" name="loginUser"><br>
+                    <input type="text" id="loginUser" name="loginUser"><br><br>
 
                     <label for="loginPass">Contraseña:</label>
-                    <input type="password" id="loginPass" name="loginPass"><br>
+                    <input type="password" id="loginPass" name="loginPass"><br><br>
 
                     <label for="recordarme">Recordarme en este equipo:</label>
-                    <input type="checkbox" id="recordarme" name="recordarme" value="1"><br>
+                    <input type="checkbox" id="recordarme" name="recordarme" value="1"><br><br>
 
                     <button type="submit">Acceder</button>
                 </form>
@@ -113,7 +127,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

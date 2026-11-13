@@ -44,7 +44,7 @@ session_write_close();
 
     <h2><?= obtenerSaludo() ?>.</h2>
 
-    <?php if (!empty($_SESSION["ultima_visita"])): ?>
+    <?php if (!empty($_SESSION["recordado"]) && !empty($_SESSION["ultima_visita"])): ?>
         <p>Hola <strong><?= htmlspecialchars($_SESSION["nombre"] ?? $_SESSION["usuario"]) ?></strong>, su última visita fue el <strong><?= htmlspecialchars($_SESSION["ultima_visita"]) ?></strong></p>
     <?php endif; ?>
 
@@ -63,7 +63,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

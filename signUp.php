@@ -2,6 +2,7 @@
 require_once "permitidos.php";
 $erroresFlash = obtenerFlash("errores_registro");
 $datosPrevios = obtenerFlash("datos_registro") ?? [];
+$enlaceInicio = isset($_SESSION["usuario"]) ? "index2.php" : "index.php";
 session_write_close();
 ?>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@ session_write_close();
     <h3 id="url-impresion">URL: https://buscasa.gt.tc/signUp.php</h3>
     <nav>
         <ul>
-            <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
+            <li><a href="<?= $enlaceInicio ?>" id="rgr"><span>Menú principal</span></a></li>
             <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
             <?php if (isset($_SESSION["usuario"])): ?>
                 <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
@@ -86,7 +87,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

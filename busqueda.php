@@ -1,5 +1,6 @@
 <?php
 require_once "permitidos.php";
+$enlaceInicio = isset($_SESSION["usuario"]) ? "index2.php" : "index.php";
 session_write_close();
 ?>
 <!DOCTYPE html>
@@ -15,10 +16,10 @@ session_write_close();
 <body>
     <h3>URL: https://buscasa.gt.tc/busqueda.php</h3>
     <ul id="menu-principal">
-        <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
+        <li><a href="<?= $enlaceInicio ?>" id="rgr"><span>Menú principal</span></a></li>
         <?php if (!isset($_SESSION["usuario"])): ?>
-            <li><a href="signIn.php" id="lgn"><span>Iniciar sesión</span></a></li>
             <li><a href="signUp.php" id="lgn"><span>Registrarse</span></a></li>
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
         <?php else: ?>
             <li><a href="partePrivada.php" id="rgr"><span>Perfil (<?= obtenerSaludo() ?>)</span></a></li>
             <li><a href="busqueda.php?salir=1" id="lgn"><span>Salir</span></a></li>
@@ -50,15 +51,42 @@ session_write_close();
             <label for="country">País:</label>
             <input list="country" name="country" class="datalist-input" />
             <datalist id="country">
-                <option value="Spain">
-                <option value="Portugal">
+                <option value="Afghanistan">
+                <option value="Albania">
+                <option value="Algeria">
+                <option value="Andorra">
+                <option value="Argentina">
+                <option value="Australia">
+                <option value="Bolivia">
+                <option value="Brazil">
+                <option value="Canada">
+                <option value="Chile">
+                <option value="China">
+                <option value="Colombia">
+                <option value="Costa Rica">
+                <option value="Cuba">
+                <option value="Dominican Republic">
+                <option value="Ecuador">
+                <option value="El Salvador">
+                <option value="Equatorial Guinea">
                 <option value="France">
-                <option value="Italy">
                 <option value="Germany">
+                <option value="Guatemala">
+                <option value="Honduras">
+                <option value="Italy">
+                <option value="Japan">
+                <option value="Mexico">
+                <option value="Nicaragua">
+                <option value="Panama">
+                <option value="Paraguay">
+                <option value="Peru">
+                <option value="Portugal">
+                <option value="Puerto Rico">
+                <option value="Spain">
                 <option value="United Kingdom">
                 <option value="United States">
-                <option value="Argentina">
-                <option value="Mexico">
+                <option value="Uruguay">
+                <option value="Venezuela">
             </datalist><br>
             <label>Ciudad: <input type="text" name="ciudad"></label>
         </section>
@@ -72,7 +100,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

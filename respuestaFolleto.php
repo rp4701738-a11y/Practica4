@@ -1,27 +1,32 @@
 <?php
 require_once "permitidos.php";
 protegerRuta();
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST["actualizar_estilos"])) {
+    $_SESSION["datos_folleto"] = $_POST;
+}
+$datosFolleto = $_SESSION["datos_folleto"] ?? $_POST;
 session_write_close();
 
-$resumen = $_POST['textarea1'] ?? '';
-$nombre = $_POST['nombre'] ?? '';
-$email = $_POST['email'] ?? '';
-$telefono = $_POST['telefono'] ?? '';
-$calle = $_POST['calle'] ?? '';
-$numero = $_POST['numero'] ?? '';
-$piso = $_POST['piso'] ?? '';
-$puerta = $_POST['puerta'] ?? '';
-$codigo_postal = $_POST['codigo_postal'] ?? '';
-$localidad = $_POST['localidad'] ?? '';
-$provincia = $_POST['provincia'] ?? '';
-$pais = $_POST['pais'] ?? '';
-$color_portada = $_POST['color_portada'] ?? '#000000';
-$copias = (int)($_POST['copias'] ?? 1);
-$resolucion = (int)($_POST['resolucion'] ?? 150);
-$anuncio = $_POST['anuncio'] ?? '';
-$fecha = $_POST['fecha'] ?? '';
-$color = $_POST['color'] ?? '';
-$precio_anuncio = isset($_POST['precio_anuncio']) ? 'Sí' : 'No';
+$resumen = $datosFolleto['textarea1'] ?? '';
+$nombre = $datosFolleto['nombre'] ?? '';
+$email = $datosFolleto['email'] ?? '';
+$telefono = $datosFolleto['telefono'] ?? '';
+$calle = $datosFolleto['calle'] ?? '';
+$numero = $datosFolleto['numero'] ?? '';
+$piso = $datosFolleto['piso'] ?? '';
+$puerta = $datosFolleto['puerta'] ?? '';
+$codigo_postal = $datosFolleto['codigo_postal'] ?? '';
+$localidad = $datosFolleto['localidad'] ?? '';
+$provincia = $datosFolleto['provincia'] ?? '';
+$pais = $datosFolleto['pais'] ?? '';
+$color_portada = $datosFolleto['color_portada'] ?? '#000000';
+$copias = (int)($datosFolleto['copias'] ?? 1);
+$resolucion = (int)($datosFolleto['resolucion'] ?? 150);
+$anuncio = $datosFolleto['anuncio'] ?? '';
+$fecha = $datosFolleto['fecha'] ?? '';
+$color = $datosFolleto['color'] ?? '';
+$precio_anuncio = isset($datosFolleto['precio_anuncio']) ? 'Sí' : 'No';
 
 $precio_fotos = 0.04 * 3;
 $precio_color = ($color == 'A color') ? 0.20 : 0.10;
@@ -103,7 +108,7 @@ function limpiar($dato) {
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

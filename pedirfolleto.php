@@ -161,7 +161,7 @@ function cal3($m, $i) {
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
     <script src="javascript/pedirFolleto.js"></script>
 </body>

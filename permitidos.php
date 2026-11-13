@@ -5,37 +5,43 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Usuarios permitidos
 $usuarios = [
     [
         "usuario" => "usuario1",
         "contrasena" => "1234",
         "nombre" => "Usuario Uno",
         "token" => "tok_u1_98f2a1b4c3",
-        "estilo" => "osc" // Modo oscuro
+        "estilo" => "osc",
+        "estilos" => ["osc"] // Modo oscuro
     ],
     [
         "usuario" => "usuario2",
         "contrasena" => "5678",
         "nombre" => "Usuario Dos",
         "token" => "tok_u2_77d4e9a2f1",
-        "estilo" => "letr" // Letra grande
+        "estilo" => "letr",
+        "estilos" => ["letr"] // Letra grande
     ],
     [
         "usuario" => "usuario3",
         "contrasena" => "abcd",
         "nombre" => "Usuario Tres",
         "token" => "tok_u3_55c1b8e3d9",
-        "estilo" => "cont" // Alto contraste
+        "estilo" => "cont",
+        "estilos" => ["cont"] // Contraste
     ],
     [
         "usuario" => "usuario4",
         "contrasena" => "efgh",
         "nombre" => "Usuario Cuatro",
         "token" => "tok_u4_33a7f6c2b8",
-        "estilo" => "amb" // Ambos (contraste + letra grande)
+        "estilo" => "amb",
+        "estilos" => ["amb"] // Ambos (contraste + letra grande)
     ]
 ];
 
+// Anuncios disponibles
 $catalogoAnuncios = [
     1 => [
         "id" => 1,
@@ -45,7 +51,7 @@ $catalogoAnuncios = [
         "fecha" => "20 de diciembre de 2025",
         "ciudad" => "Caribe",
         "pais" => "España",
-        "precio" => "20000€",
+        "precio" => "20000$",
         "imagen" => "imagenes/casa1.jpeg",
         "descripcion" => "Espectacular casa soleada junto a la costa."
     ],
@@ -57,7 +63,7 @@ $catalogoAnuncios = [
         "fecha" => "28 de diciembre de 2024",
         "ciudad" => "Murcia",
         "pais" => "España",
-        "precio" => "15000€",
+        "precio" => "15000$",
         "imagen" => "imagenes/apartamento1.jpeg",
         "descripcion" => "Apartamento céntrico totalmente equipado."
     ],
@@ -69,7 +75,7 @@ $catalogoAnuncios = [
         "fecha" => "10 de enero de 2026",
         "ciudad" => "Castilla",
         "pais" => "España",
-        "precio" => "20000€",
+        "precio" => "20000$",
         "imagen" => "imagenes/casa1.jpeg",
         "descripcion" => "Casa mediana con vistas al mar, a las afueras de la ciudad."
     ],
@@ -81,7 +87,7 @@ $catalogoAnuncios = [
         "fecha" => "15 de febrero de 2026",
         "ciudad" => "Madrid",
         "pais" => "España",
-        "precio" => "35000€",
+        "precio" => "35000$",
         "imagen" => "imagenes/apartamento1.jpeg",
         "descripcion" => "Tranquilo apartamento rodeado de naturaleza."
     ],
@@ -93,20 +99,20 @@ $catalogoAnuncios = [
         "fecha" => "05 de marzo de 2026",
         "ciudad" => "Valencia",
         "pais" => "España",
-        "precio" => "15000€",
+        "precio" => "15000$",
         "imagen" => "imagenes/casa1.jpeg",
         "descripcion" => "Acogedora casa rural ideal para desconectar."
     ]
 ];
 
-// Procesar cierre de sesión con botones Salir
-if (isset($_POST['salir']) || isset($_GET['salir'])) {$_SESSION = array();
+// Cierre de sesión al pulsar botones Salir
+if (isset($_POST['salir']) || isset($_GET['salir'])) {
+    $_SESSION = array();
     if (isset($_COOKIE[session_name()])) {
         setcookie(session_name(), '', time() - 42000, '/', '', false, true);
     }
     session_destroy();
 
-    // Borrar cookies de "Recordarme" y de "Últimos anuncios visitados"
     setcookie('recordar_token', '', time() - 3600, '/', '', false, true);
     setcookie('recordar_visita', '', time() - 3600, '/', '', false, true);
     setcookie('recordar_expira', '', time() - 3600, '/', '', false, true);
@@ -116,35 +122,66 @@ if (isset($_POST['salir']) || isset($_GET['salir'])) {$_SESSION = array();
     exit();
 }
 
-// Recuperación automática de sesión si no hay sesión activa pero existe la cookie "Recordarme"
 if (!isset($_SESSION["usuario"]) && isset($_COOKIE["recordar_token"])) {
-    $tokenCookie =$_COOKIE["recordar_token"];
-    foreach ($usuarios as$u) {
+    $tokenCookie = $_COOKIE["recordar_token"];
+    foreach ($usuarios as $u) {
         if ($u["token"] === $tokenCookie) {
             $_SESSION["usuario"] = $u["usuario"];
             $_SESSION["nombre"] = $u["nombre"];
-            $_SESSION["estilo"] = $u["estilo"];
             $_SESSION["recordado"] = true;
 
-            // La última visita que se muestra es la almacenada previamente en la cookie
-            $visitaAnterior =$_COOKIE["recordar_visita"] ?? date("d/m/y \a \l\a\s H:i");
+            // Si el usuario modificó sus estilos previamente, cargamos su combinación guardada; si no, los de por defecto
+            $cookieEstilosUsuario = "estilos_custom_" . $u["usuario"];
+            if (isset($_COOKIE[$cookieEstilosUsuario])) {
+                $dec = json_decode($_COOKIE[$cookieEstilosUsuario], true);
+                $_SESSION["estilos"] = is_array($dec) ? $dec : $u["estilos"];
+            } else {
+                $_SESSION["estilos"] = $u["estilos"];
+            }
+
+            $visitaAnterior = $_COOKIE["recordar_visita"] ?? date("d/m/y \a \l\a\s H:i");
             $_SESSION["ultima_visita"] = $visitaAnterior;
 
-            // Actualizamos la fecha de última visita para la próxima vez que se recupere por cookie,
-            // conservando exactamente la fecha de caducidad original (sin sliding expiration)
             $expiracionOriginal = isset($_COOKIE["recordar_expira"])
                 ? (int)$_COOKIE["recordar_expira"]
                 : (time() + 90 * 24 * 60 * 60);
 
-            if ($expiracionOriginal > time()) {$ahora = date("d/m/y \a \l\a\s H:i");
-                setcookie('recordar_visita', $ahora,$expiracionOriginal, '/', '', false, true);
+            if ($expiracionOriginal > time()) {
+                $ahora = date("d/m/y \a \l\a\s H:i");
+                setcookie('recordar_visita', $ahora, $expiracionOriginal, '/', '', false, true);
             }
             break;
         }
     }
 }
 
-// Función para proteger páginas privadas y públicas restringidas
+// Guardar estilos
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["actualizar_estilos"])) {
+    $estilosPermitidos = ["osc", "letr", "cont", "amb"];
+    $seleccionados = [];
+    if (isset($_POST["estilos"]) && is_array($_POST["estilos"])) {
+        foreach ($_POST["estilos"] as $est) {
+            if (in_array($est, $estilosPermitidos, true)) {
+                $seleccionados[] = $est;
+            }
+        }
+    }
+    $_SESSION["estilos"] = $seleccionados;
+
+    // Guardar estilos con sesion iniciada
+    if (isset($_SESSION["usuario"])) {
+        $cookieEstilosUsuario = "estilos_custom_" . $_SESSION["usuario"];
+        $caducidadEstilos = time() + (90 * 24 * 60 * 60);
+        setcookie($cookieEstilosUsuario, json_encode($seleccionados), $caducidadEstilos, '/', '', false, true);
+        $_COOKIE[$cookieEstilosUsuario] = json_encode($seleccionados);
+    }
+
+    session_write_close();
+    $destino = $_SERVER["REQUEST_URI"] ?? "index.php";
+    header("Location: " . $destino, true, 303);
+    exit();
+}
+
 function protegerRuta() {
     if (!isset($_SESSION["usuario"])) {
         $_SESSION["flash"]["error"] = "Debes iniciar sesión para acceder a esa página.";
@@ -154,71 +191,75 @@ function protegerRuta() {
     }
 }
 
-// Función para obtener y borrar un mensaje Flashdata
 function obtenerFlash($clave) {
-    if (isset($_SESSION["flash"][$clave])) {$valor = $_SESSION["flash"][$clave];
+    if (isset($_SESSION["flash"][$clave])) {
+        $valor = $_SESSION["flash"][$clave];
         unset($_SESSION["flash"][$clave]);
         return $valor;
     }
     return null;
 }
 
-// Función para calcular el saludo según la franja horaria
 function obtenerSaludo() {
-    $usuario =$_SESSION["usuario"] ?? "Usuario";
+    $usuario = $_SESSION["usuario"] ?? "Usuario";
     $hora = (int) date('H');
-    if ($hora >= 6 && $hora < 12) {$saludo = "Buenos días";
-    } elseif ($hora >= 12 && $hora < 16) {$saludo = "Hola";
-    } elseif ($hora >= 16 && $hora < 20) {$saludo = "Buenas tardes";
+    if ($hora >= 6 && $hora < 12) {
+        $saludo = "Buenos días";
+    } elseif ($hora >= 12 && $hora < 16) {
+        $saludo = "Hola";
+    } elseif ($hora >= 16 && $hora < 20) {
+        $saludo = "Buenas tardes";
     } else {
         $saludo = "Buenas noches";
     }
     return $saludo . ", " . htmlspecialchars($usuario);
 }
 
-// Función para marcar como checked el estilo asignado al usuario en sesión
+// Comprueba si un estilo concreto está dentro del array de estilos activos en la sesión
 function atributoEstilo($idCheckbox) {
-    $estiloActual =$_SESSION["estilo"] ?? "";
-    return ($estiloActual ===$idCheckbox) ? "checked" : "";
+    $estilosActuales = $_SESSION["estilos"] ?? [];
+    if (!is_array($estilosActuales)) {
+        $estilosActuales = ($estilosActuales !== "") ? [$estilosActuales] : [];
+    }
+    return in_array($idCheckbox, $estilosActuales, true) ? "checked" : "";
 }
 
-// Función para registrar un anuncio visitado en la cookie (duración: 1 semana, máx. 4 anuncios)
-function registrarVisitaAnuncio($idAnuncio,$catalogo) {
-    if (!isset($catalogo[$idAnuncio])) { return []; }$lista = [];
+function registrarVisitaAnuncio($idAnuncio, $catalogo) {
+    if (!isset($catalogo[$idAnuncio])) {
+        return [];
+    }
+    $lista = [];
     if (isset($_COOKIE['ultimos_anuncios'])) {
         $decodificado = json_decode($_COOKIE['ultimos_anuncios'], true);
         if (is_array($decodificado)) {
-            $lista = array_map('intval',$decodificado);
+            $lista = array_map('intval', $decodificado);
         }
     }
 
-    // Si ya estaba visitado, lo quitamos de su posición anterior para no duplicarlo
-    $indice = array_search((int)$idAnuncio,$lista, true);
+    $indice = array_search((int)$idAnuncio, $lista, true);
     if ($indice !== false) {
         unset($lista[$indice]);
         $lista = array_values($lista);
     }
 
-    // Añadimos el anuncio al final para respetar el orden de visita
     $lista[] = (int)$idAnuncio;
 
-    // Si supera los 4 anuncios, eliminamos el primero (el más antiguo de los cuatro)
     if (count($lista) > 4) {
         array_shift($lista);
     }
 
     $caducidadSemana = time() + (7 * 24 * 60 * 60);
-    setcookie('ultimos_anuncios', json_encode($lista),$caducidadSemana, '/', '', false, true);
+    setcookie('ultimos_anuncios', json_encode($lista), $caducidadSemana, '/', '', false, true);
     $_COOKIE['ultimos_anuncios'] = json_encode($lista);
     return $lista;
 }
 
-// Función para renderizar el panel "Últimos anuncios visitados"
-function mostrarPanelUltimosAnuncios($catalogo) {$lista = [];
+function mostrarPanelUltimosAnuncios($catalogo) {
+    $lista = [];
     if (isset($_COOKIE['ultimos_anuncios'])) {
         $decodificado = json_decode($_COOKIE['ultimos_anuncios'], true);
         if (is_array($decodificado)) {
-            $lista = array_map('intval',$decodificado);
+            $lista = array_map('intval', $decodificado);
         }
     }
 
@@ -230,8 +271,9 @@ function mostrarPanelUltimosAnuncios($catalogo) {$lista = [];
         echo '<p>Aún no has visitado ningún anuncio recientemente.</p>';
     } else {
         echo '<div style="display: flex; flex-wrap: wrap; gap: 15px;">';
-        foreach ($lista as$id) {
-            if (isset($catalogo[$id])) {$an = $catalogo[$id];
+        foreach ($lista as $id) {
+            if (isset($catalogo[$id])) {
+                $an = $catalogo[$id];
                 echo '<section style="float: none; position: static; height: auto; width: 220px; margin: 5px; padding: 10px;">';
                 echo '<a href="anuncio.php?id=' . (int)$an['id'] . '">';
                 echo '<img src="' . htmlspecialchars($an['imagen']) . '" alt="' . htmlspecialchars($an['titulo']) . '" style="width: 100%; height: 130px; object-fit: cover;">';
@@ -248,16 +290,20 @@ function mostrarPanelUltimosAnuncios($catalogo) {$lista = [];
     echo '</aside>';
 }
 
-// Función para renderizar la barra de estilos conservando la selección en sesión
 function mostrarBarraEstilos() {
+    $urlActual = htmlspecialchars($_SERVER["REQUEST_URI"] ?? "index.php", ENT_QUOTES, 'UTF-8');
     ?>
     <nav>
-        <ul>
-            <li><span id="lol">Modo oscuro:<input type="checkbox" id="osc" <?= atributoEstilo('osc') ?>></span></li>
-            <li><span id="lol">Letra grande:<input type="checkbox" id="letr" <?= atributoEstilo('letr') ?>></span></li>
-            <li><span id="lol">Contraste:<input type="checkbox" id="cont" <?= atributoEstilo('cont') ?>></span></li>
-            <li><span id="lol">Ambos:<input type="checkbox" id="amb" <?= atributoEstilo('amb') ?>></span></li>
-        </ul>
+        <form method="POST" action="<?= $urlActual ?>" style="margin: 0; padding: 0; transform: none;">
+            <input type="hidden" name="actualizar_estilos" value="1">
+            <ul>
+                <li><span id="lol">Modo oscuro:<input type="checkbox" id="osc" name="estilos[]" value="osc" <?= atributoEstilo('osc') ?> onchange="this.form.submit()"></span></li>
+                <li><span id="lol">Letra grande:<input type="checkbox" id="letr" name="estilos[]" value="letr" <?= atributoEstilo('letr') ?> onchange="this.form.submit()"></span></li>
+                <li><span id="lol">Contraste:<input type="checkbox" id="cont" name="estilos[]" value="cont" <?= atributoEstilo('cont') ?> onchange="this.form.submit()"></span></li>
+                <li><span id="lol">Ambos:<input type="checkbox" id="amb" name="estilos[]" value="amb" <?= atributoEstilo('amb') ?> onchange="this.form.submit()"></span></li>
+                <noscript><li><button type="submit">Guardar estilos</button></li></noscript>
+            </ul>
+        </form>
     </nav>
     <?php
 }

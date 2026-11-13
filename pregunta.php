@@ -7,14 +7,22 @@ $textoPregunta = "";
 $tipoPregunta = "";
 $errorPregunta = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST["actualizar_estilos"])) {
     $textoPregunta = trim($_POST["textarea1"] ?? "");
     $tipoPregunta = trim($_POST["tipo-pregunta"] ?? "");
     if ($textoPregunta === "" || $tipoPregunta === "") {
         $errorPregunta = "Debes seleccionar un tipo de pregunta y escribir tu mensaje.";
     } else {
         $mensajeEnviado = true;
+        $_SESSION["ultima_pregunta_ok"] = [
+            "texto" => $textoPregunta,
+            "tipo" => $tipoPregunta
+        ];
     }
+} elseif (isset($_GET["enviado"]) && isset($_SESSION["ultima_pregunta_ok"])) {
+    $mensajeEnviado = true;
+    $textoPregunta = $_SESSION["ultima_pregunta_ok"]["texto"];
+    $tipoPregunta = $_SESSION["ultima_pregunta_ok"]["tipo"];
 }
 session_write_close();
 ?>
@@ -57,7 +65,7 @@ session_write_close();
         <?php if ($errorPregunta !== ""): ?>
             <p style="color: red; font-weight: bold;"><?= htmlspecialchars($errorPregunta) ?></p>
         <?php endif; ?>
-        <form action="pregunta.php" method="POST">
+        <form action="pregunta.php?enviado=1" method="POST">
             <h3>Tipo de pregunta:</h3>
             <div>
                 <input type="radio" id="info" name="tipo-pregunta" value="Más información">
@@ -82,7 +90,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

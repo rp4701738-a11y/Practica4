@@ -7,6 +7,7 @@ if (!isset($catalogoAnuncios[$id])) {
     $id = ($id % 2 === 0) ? 2 : 1;
 }
 $anuncioActual = $catalogoAnuncios[$id];
+$enlaceInicio = isset($_SESSION["usuario"]) ? "index2.php" : "index.php";
 
 registrarVisitaAnuncio($id, $catalogoAnuncios);
 session_write_close();
@@ -24,7 +25,7 @@ session_write_close();
     <h3>URL: https://buscasa.gt.tc/anuncio.php</h3>
     <nav>
         <ul>
-            <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
+            <li><a href="<?= $enlaceInicio ?>" id="rgr"><span>Menú principal</span></a></li>
             <li><a href="busqueda.php" id="rgr"><span>Búsqueda</span></a></li>
             <li><a href="partePrivada.php" id="rgr"><span>Perfil (<?= obtenerSaludo() ?>)</span></a></li>
             <li><a href="anuncio.php?salir=1" id="lgn"><span>Salir</span></a></li>
@@ -57,7 +58,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

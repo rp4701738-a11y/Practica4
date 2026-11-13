@@ -8,6 +8,7 @@ foreach ($catalogoAnuncios as $anuncio) {
         $resultados[] = $anuncio;
     }
 }
+$enlaceInicio = isset($_SESSION["usuario"]) ? "index2.php" : "index.php";
 session_write_close();
 ?>
 <!DOCTYPE html>
@@ -19,21 +20,22 @@ session_write_close();
     <link rel="stylesheet" href="style/sectionP.css">
     <link rel="stylesheet" href="style/barraNav.css">
     <link rel="stylesheet" href="style/resultadoBusqueda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <h3 id="url-impresion">URL: https://buscasa.gt.tc/resultadoBusqueda.php</h3>
-    <nav id="menu-principal">
-        <ul>
-            <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
-            <li><a href="busqueda.php" id="rgr"><span>Búsqueda</span></a></li>
-            <?php if (isset($_SESSION["usuario"])): ?>
-                <li><a href="partePrivada.php" id="rgr"><span>Perfil (<?= obtenerSaludo() ?>)</span></a></li>
-                <li><a href="resultadoBusqueda.php?salir=1" id="lgn"><span>Salir</span></a></li>
-            <?php else: ?>
-                <li><a href="signIn.php" id="lgn"><span>Iniciar sesión</span></a></li>
-            <?php endif; ?>
-        </ul>
-    </nav>
+
+    <ul id="menu-principal">
+        <li><a href="<?= $enlaceInicio ?>" id="rgr"><span>Menú principal</span></a></li>
+        <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
+        <?php if (!isset($_SESSION["usuario"])): ?>
+            <li><a href="signUp.php" id="lgn"><span>Registrarse</span></a></li>
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
+        <?php else: ?>
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil (<?= obtenerSaludo() ?>)</span></a></li>
+            <li><a href="resultadoBusqueda.php?salir=1" id="lgn"><span>Salir</span></a></li>
+        <?php endif; ?>
+    </ul>
 
     <?php mostrarBarraEstilos(); ?>
 
@@ -67,7 +69,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>
