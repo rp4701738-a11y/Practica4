@@ -1,68 +1,31 @@
 <?php
-
-$ciudad = $_GET['ciudad'] ?? '';
-
-$anuncios = [
-    [
-        "id" => 1,
-        "titulo" => "Casa en el Caribe",
-        "fecha" => "20 de diciembre de 2025",
-        "ciudad" => "Caribe",
-        "pais" => "España",
-        "precio" => "20000$",
-        "imagen" => "imagenes/casa1.jpeg"
-    ],
-    [
-        "id" => 2,
-        "titulo" => "Apartamento en Murcia",
-        "fecha" => "28 de diciembre de 2024",
-        "ciudad" => "Murcia",
-        "pais" => "España",
-        "precio" => "15000$",
-        "imagen" => "imagenes/apartamento1.jpeg"
-    ]
-];
-
-$resultados = [];
-
-foreach ($anuncios as $anuncio) {
-
-    if (
-        $ciudad == '' ||
-        strcasecmp($anuncio['ciudad'], trim($ciudad)) == 0
-    ) {
-        $resultados[] = $anuncio;
-    }
-
-}
-
+require_once "permitidos.php";
+session_write_close();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Búsqueda</title>
     <link rel="stylesheet" href="style/barraNav.css">
     <link rel="stylesheet" href="style/busqueda.css">
     <link rel="stylesheet" href="style/titulos.css">
 </head>
 <body>
     <h3>URL: https://buscasa.gt.tc/busqueda.php</h3>
-
     <ul id="menu-principal">
         <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
-        <li><a href="signUp.php" id="lgn"><span>Registrarse</span></a></li>
-        <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
+        <?php if (!isset($_SESSION["usuario"])): ?>
+            <li><a href="signIn.php" id="lgn"><span>Iniciar sesión</span></a></li>
+            <li><a href="signUp.php" id="lgn"><span>Registrarse</span></a></li>
+        <?php else: ?>
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil (<?= obtenerSaludo() ?>)</span></a></li>
+            <li><a href="busqueda.php?salir=1" id="lgn"><span>Salir</span></a></li>
+        <?php endif; ?>
     </ul>
-    <nav>
-        <ul>
-            <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
-            <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
-            <li><span for="cont" id="lol">Contraste:<input type="checkbox" id="cont"></span></li>
-            <li><span for="cont" id="lol">Ambos:<input type="checkbox" id="amb"></span></li>
-        </ul>
-    </nav>
+
+    <?php mostrarBarraEstilos(); ?>
 
     <input type="checkbox" id="print-toggle" style="display: none;">
     <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
@@ -71,8 +34,8 @@ foreach ($anuncios as $anuncio) {
 
     <h2>Búsqueda avanzada</h2>
     <hr size="3" color="black">
-    
-    <form action="resultadoBusqueda.php" method="GET">    
+
+    <form action="resultadoBusqueda.php" method="GET">
         <section>
             <label>Tipo de venta:</label>
             <input type="radio" id="venta" name="tipo-venta" value="Venta">
@@ -80,66 +43,36 @@ foreach ($anuncios as $anuncio) {
             <input type="radio" id="alquiler" name="tipo-venta" value="Alquiler">
             <label for="alquiler">Alquiler</label><br>
         </section>
-
         <section>
-            <label>Tipo de vivienda: <input type="text"></label>
+            <label>Tipo de vivienda: <input type="text" name="tipo-vivienda"></label>
         </section>
-
         <section>
             <label for="country">País:</label>
             <input list="country" name="country" class="datalist-input" />
             <datalist id="country">
-                <option value="Afghanistan">
-                <option value="Albania">
-                <option value="Algeria">
-                <option value="Andorra">
-                <option value="Argentina">
-                <option value="Australia">
-                <option value="Bolivia">
-                <option value="Brazil">
-                <option value="Canada">
-                <option value="Chile">
-                <option value="China">
-                <option value="Colombia">
-                <option value="Costa Rica">
-                <option value="Cuba">
-                <option value="Dominican Republic">
-                <option value="Ecuador">
-                <option value="El Salvador">
-                <option value="Equatorial Guinea">
-                <option value="France">
-                <option value="Germany">
-                <option value="Guatemala">
-                <option value="Honduras">
-                <option value="Italy">
-                <option value="Japan">
-                <option value="Mexico">
-                <option value="Nicaragua">
-                <option value="Panama">
-                <option value="Paraguay">
-                <option value="Peru">
-                <option value="Portugal">
-                <option value="Puerto Rico">
                 <option value="Spain">
+                <option value="Portugal">
+                <option value="France">
+                <option value="Italy">
+                <option value="Germany">
                 <option value="United Kingdom">
                 <option value="United States">
-                <option value="Uruguay">
-                <option value="Venezuela">
+                <option value="Argentina">
+                <option value="Mexico">
             </datalist><br>
-            <label>
-                Ciudad: <input type="text" name="ciudad">
-            </label>        
+            <label>Ciudad: <input type="text" name="ciudad"></label>
         </section>
-
         <section id="boton-enviar">
-            <input type="submit" value='🔍'>
+            <input type="submit" value="🔍">
         </section>
     </form>
+
+    <?php mostrarPanelUltimosAnuncios($catalogoAnuncios); ?>
 
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

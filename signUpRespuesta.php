@@ -1,4 +1,6 @@
 <?php
+require_once "permitidos.php";
+
 function e($value) {
     if ($value === null) {
         return '';
@@ -6,9 +8,14 @@ function e($value) {
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    session_write_close();
+    header("Location: signUp.php");
+    exit();
+}
+
 $errores = [];
 
-// Recogemos los datos enviados por el formulario (requiere que añadas method="post" al <form> de tu HTML)
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 $repeatPassword = isset($_POST['repeatPassword']) ? $_POST['repeatPassword'] : '';
@@ -30,6 +37,24 @@ if (empty($repeatPassword)) {
 if (!empty($password) && !empty($repeatPassword) && $password !== $repeatPassword) {
     $errores[] = "Las contraseñas no coinciden.";
 }
+
+// Si hay errores, los pasamos mediante Flashdata en sesión y redirigimos al formulario de registro
+if (!empty($errores)) {
+    $_SESSION["flash"]["errores_registro"] = $errores;
+    $_SESSION["flash"]["datos_registro"] = [
+        "username" => $username,
+        "email" => $email,
+        "sexo" => $sexo,
+        "fechaNacimiento" => $fechaNacimiento,
+        "ciudad" => $ciudad,
+        "pais" => $pais
+    ];
+    session_write_close();
+    header("Location: signUp.php");
+    exit();
+}
+
+session_write_close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,37 +62,25 @@ if (!empty($password) && !empty($repeatPassword) && $password !== $repeatPasswor
     <meta charset="UTF-8">
     <title>Respuesta Registro</title>
     <link rel="stylesheet" href="style/signUp.css">
+    <link rel="stylesheet" href="style/barraNav.css">
 </head>
 <body>
+    <?php mostrarBarraEstilos(); ?>
     <section id="respuesta">
         <h1>Resultado del Registro:</h1>
-        
-        <?php if (!empty($errores)): ?>
-            <!-- Estrategia 1: Mostrar errores y enlace de vuelta -->
-            <div class="error-container" style="border: 2px solid red; padding: 15px; background-color: #ffe6e6;">
-                <h3>Se han encontrado errores en los datos introducidos:</h3>
-                <ul>
-                    <?php foreach ($errores as $error): ?>
-                        <li><?= e($error) ?></li>
-                    <?php endforeach; ?>
-                </ul>
-                <p><a href="signUp.php">Volver al formulario inicial</a></p>
-            </div>
-        <?php else: ?>
-            <!-- Visualización de datos si la validación es correcta -->
-            <div class="exito-container" style="border: 2px solid green; padding: 15px; background-color: #e6ffe6;">
-                <h3>¡Inserción realizada, tus datos son:</h3>
-                <ul>
-                    <li><strong>Nombre de usuario:</strong> <?= e($username) ?></li>
-                    <li><strong>Email:</strong> <?= e($email) ?></li>
-                    <li><strong>Sexo:</strong> <?= e($sexo) ?></li>
-                    <li><strong>Fecha de nacimiento:</strong> <?= e($fechaNacimiento) ?></li>
-                    <li><strong>Ciudad:</strong> <?= e($ciudad) ?></li>
-                    <li><strong>País:</strong> <?= e($pais) ?></li>
-                </ul>
-                <p><em>Nota sobre la foto: No se muestra actualmente porque la subida de ficheros al servidor se implementará en una próxima práctica.</em></p>
-            </div>
-        <?php endif; ?>
+        <div class="exito-container" style="border: 2px solid green; padding: 15px; background-color: #e6ffe6;">
+            <h3>Inserción realizada, tus datos son:</h3>
+            <ul>
+                <li><strong>Nombre de usuario:</strong> <?= e($username) ?></li>
+                <li><strong>Email:</strong> <?= e($email) ?></li>
+                <li><strong>Sexo:</strong> <?= e($sexo) ?></li>
+                <li><strong>Fecha de nacimiento:</strong> <?= e($fechaNacimiento) ?></li>
+                <li><strong>Ciudad:</strong> <?= e($ciudad) ?></li>
+                <li><strong>País:</strong> <?= e($pais) ?></li>
+            </ul>
+            <p><em>Nota sobre la foto: No se muestra actualmente porque la subida de ficheros al servidor se implementará en una próxima práctica.</em></p>
+            <p><a href="index.php">Ir a la página principal</a></p>
+        </div>
     </section>
 </body>
 </html>

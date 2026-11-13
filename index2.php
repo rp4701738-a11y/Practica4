@@ -1,56 +1,61 @@
+<?php
+require_once "permitidos.php";
+protegerRuta();
+session_write_close();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Principal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style/index2.css">
     <link rel="stylesheet" href="style/sectionP.css">
     <link rel="stylesheet" href="style/barraNav.css">
 </head>
 <body>
-    <h3>URL: https://buscasa.gt.tc.index2.php</h3>
+    <h3>URL: https://buscasa.gt.tc/index2.php</h3>
     <nav>
         <ul>
-            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
-            <li><a href="partePrivada.php" id="rgr"><span>Perfil </span></a></li>
+            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
+            <li><a href="partePrivada.php" id="rgr"><span>Perfil (<?= obtenerSaludo() ?>)</span></a></li>
+            <li><a href="index2.php?salir=1" id="lgn"><span>Salir</span></a></li>
         </ul>
     </nav>
-      <nav>
-        <ul>
-            <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
-            <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
-            <li><span for="cont" id="lol">Contraste:<input type="checkbox" id="cont"></span></li>
-            <li><span for="cont" id="lol">Ambos:<input type="checkbox" id="amb"></span></li>
-        </ul>
-    </nav>
+
+    <?php mostrarBarraEstilos(); ?>
+
     <div>
-        <form>
-            <input type="text" placeholder="Buscar por ciudad" id="buscador">
+        <form action="resultadoBusqueda.php" method="GET">
+            <input type="text" placeholder="Buscar por ciudad" id="buscador" name="ciudad">
+            <input type="submit" value="🔍">
         </form><br>
-    
+
         <input type="checkbox" id="print-toggle" style="display: none;">
         <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer;">
             <u>Cambiar vista normal/impresión</u>
         </label>
         <br><br>
-
         <h2>Anuncios destacados</h2>
         <hr size="1px" align="left" color="black">
         <br><br>
+        <?php foreach ($catalogoAnuncios as $anuncio): ?>
+            <section>
+                <a href="anuncio.php?id=<?= (int)$anuncio['id'] ?>">
+                    <img src="<?= htmlspecialchars($anuncio['imagen']) ?>" alt="<?= htmlspecialchars($anuncio['titulo']) ?>">
+                </a>
+                <p><?= htmlspecialchars($anuncio['titulo']) ?></p>
+            </section>
+        <?php endforeach; ?>
 
-        <section>
-            <a href="anuncio.php"><img src="imagenes/casa1.jpeg"></a><p>Casa en el Caribe</p>
-        </section>
-        <section>
-            <a href="error.php"><img src="imagenes/apartamento1.jpeg"></a><p>Apartamento en Murcia</p>
-        </section>
+        <?php mostrarPanelUltimosAnuncios($catalogoAnuncios); ?>
     </div>
 
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

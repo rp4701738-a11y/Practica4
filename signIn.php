@@ -1,5 +1,10 @@
+<?php
+require_once "permitidos.php";
+$errorFlash = obtenerFlash("error");
+session_write_close();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +15,18 @@
 </head>
 <body>
     <h3 id="url-impresion">URL: https://buscasa.gt.tc/signIn.php</h3>
-
     <nav>
         <ul>
             <li><a href="index.php" id="rgr"><span>Menú principal</span></a></li>
-            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>   <!--Este boton tiene icono-->
-            <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
+            <li><a href="busqueda.php" id="rgr"><span><i class="fa-solid fa-magnifying-glass"></i> Búsqueda</span></a></li>
+            <?php if (isset($_SESSION["usuario"])): ?>
+                <li><a href="partePrivada.php" id="rgr"><span>Perfil</span></a></li>
+                <li><a href="signIn.php?salir=1" id="lgn"><span>Salir</span></a></li>
+            <?php endif; ?>
         </ul>
     </nav>
-    <nav>
-        <ul>
-            <li><span for="osc" id="lol">Modo oscuro:<input type="checkbox" id="osc"></span></li>
-            <li><span for="letr" id="lol">Letra grande:<input type="checkbox" id="letr"></span></li>
-            <li><span for="cont" id="lol">Contraste:<input type="checkbox" id="cont"></span></li>
-            <li><span for="cont" id="lol">Ambos:<input type="checkbox" id="amb"></span></li>
-        </ul>
-    </nav>
+
+    <?php mostrarBarraEstilos(); ?>
 
     <input type="checkbox" id="print-toggle" style="display: none;">
     <label for="print-toggle" style="display: block; margin-bottom: 10px; color: black; cursor: pointer; clear: both;">
@@ -33,20 +34,40 @@
     </label>
 
     <section id="signIn">
-        <h1>Iniciar sesión:</h1>
-        <form >
-            <label>Nombre de usuario: <input type="text" id="nu"><p id="l"></p></label>
-            <br><br><label>Contraseña: <input type="text" onkeyup='nover( this )' id="ct"><p id="m"></p></label>
-            <br><br><input type="button" value="Enviar" onclick="cambio()">
-        </form>
-        <p>No tienes una cuenta? <a href="signUp.php">Regístrate</a></p>
+        <?php if (isset($_SESSION["usuario"])): ?>
+            <h1>Sesión activa</h1>
+            <p>
+                Hola <strong><?= htmlspecialchars($_SESSION["nombre"] ?? $_SESSION["usuario"]) ?></strong>,
+                su última visita fue el <strong><?= htmlspecialchars($_SESSION["ultima_visita"] ?? date("d/m/y \a \l\a\s H:i")) ?></strong>
+            </p>
+            <form action="partePrivada.php" method="GET" style="display:inline;">
+                <button type="submit">Acceder</button>
+            </form>
+            <form action="signIn.php" method="POST" style="display:inline;">
+                <button type="submit" name="salir">Salir</button>
+            </form>
+        <?php else: ?>
+            <h1>Iniciar sesión:</h1>
+            <?php if ($errorFlash !== null): ?>
+                <p style="color: red; font-weight: bold;"><?= htmlspecialchars($errorFlash) ?></p>
+            <?php endif; ?>
+            <form action="controlAcc.php" method="POST" novalidate>
+                <input type="hidden" name="origen" value="signIn">
+                <label>Nombre de usuario: <input type="text" id="nu" name="loginUser"></label>
+                <br><br><label>Contraseña: <input type="password" id="ct" name="loginPass"></label>
+                <br><br><label><input type="checkbox" name="recordarme" value="1"> Recordarme en este equipo</label>
+                <br><br><input type="submit" value="Acceder">
+            </form>
+            <p>¿No tienes una cuenta? <a href="signUp.php">Regístrate</a></p>
+        <?php endif; ?>
     </section>
+
+    <?php mostrarPanelUltimosAnuncios($catalogoAnuncios); ?>
 
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
-    <script src="javascript/signIn.js"></script>
 </body>
 </html>
