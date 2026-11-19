@@ -1,144 +1,264 @@
 
 <?php
+require_once "permitidos.php";
+require_once "conexion.php";
 
-function OpenConnection()
-{
-    $serverName = "tcp:<server>.database.windows.net,1433";
-
-    $connectionOptions = array(
-        "Database" => "AdventureWorks",
-        "Uid" => "<user_id>",
-        "PWD" => "<password>",
-        "Encrypt" => true,
-        "TrustServerCertificate" => false
-    );
-
-    $conn = sqlsrv_connect($serverName, $connectionOptions);
-
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-    return $conn;
-}
+protegerRuta();
 
 function ReadData()
 {
-    $Id = $_GET["Id"] ?? null;
+    // Obtener y validar el ID del anuncio
+    $id = $_GET["id"] ?? $_GET["Id"] ?? null;
 
-    if ($Id === null || !filter_var($Id, FILTER_VALIDATE_INT)) {
-        die("ID de anuncio no válido.");
+    if (
+        $id === null ||
+        filter_var($id, FILTER_VALIDATE_INT) === false ||
+        (int)$id <= 0
+    ) {
+        echo "<p>ID de anuncio no válido.</p>";
+        return;
     }
+
+    $id = (int)$id;
 
     $conn = OpenConnection();
+    $sql = "SELECT
+                A.IdAnuncio,
+                A.Titulo,
+                A.FPrincipal,
+                A.Alternativo,
+                A.Precio,
+                A.Ciudad,
+                P.NomPais AS Pais,
+                TV.NomTVivienda AS TipoVivienda,
+                TA.NomTAnuncio AS TipoAnuncio,
+                A.Superficie,
+                A.NHabitaciones,
+                A.NBanyos
+            FROM Anuncios A
+            INNER JOIN TiposViviendas TV
+                ON A.TVivienda = TV.IdTVivienda
+            INNER JOIN TiposAnuncios TA
+                ON A.TAnuncio = TA.IdTAnuncio
+            LEFT JOIN Paises P
+                ON A.Pais = P.IdPais
+            WHERE A.IdAnuncio = ?";
 
-    $tsql = "SELECT
-                [Titulo],
-                [Foto],
-                [TVivienda],
-                [Texto],
-                [TAnuncio],
-                [FPrincipal],
-                [ALternativo],
-                [Precio],
-                [Ciudad],
-                [Pais],
-                [Superficie],
-                [NHabitaciones],
-                [NBanyos],
-                [Planta],
-                [FRegistro],
-                [Usuario]
-             FROM Fotos
-             WHERE IdAnuncio = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
 
-    $params = array($Id);
+    $resultado = $stmt->get_result();
 
-    $getProducts = sqlsrv_query($conn, $tsql, $params);
-
-    if ($getProducts === false) {
-        die(print_r(sqlsrv_errors(), true));
+    if ($resultado->num_rows === 0) {
+        echo "<p>No se ha encontrado el anuncio.</p>";
+        $stmt->close();
+        $conn->close();
+        return;
     }
 
-    while ($row = sqlsrv_fetch_array($getProducts, SQLSRV_FETCH_ASSOC)) {
+    $anuncio = $resultado->fetch_assoc();
+    $stmt->close();
+    $sqlFotos = "SELECT
+                    IdFoto,
+                    Titulo,
+                    Foto,
+                    Alternativo
+                 FROM Fotos
+                 WHERE Anuncio = ?
+                 ORDER BY IdFoto ASC";
 
-        echo "<br>";
+    $stmtFotos = $conn->prepare($sqlFotos);
+    $stmtFotos->bind_param("i", $id);
+    $stmtFotos->execute();
 
-        // 1. Titulo
-        echo "<p>Título: " . htmlspecialchars($row["Titulo"] ?? "") . "</p>";
+    $resultadoFotos = $stmtFotos->get_result();
 
-        // 2. Foto
-        echo '<img src="' . htmlspecialchars($row["Foto"] ?? "") . '" width="200" alt="Foto del anuncio">';
+    // Guardar todas las fotografías
+    $fotos = [];
 
-        // 3. TVivienda
-        echo "<p>Tipo de vivienda: " . htmlspecialchars($row["TVivienda"] ?? "") . "</p>";
-
-        // 4. Texto
-        echo "<p>Texto: " . htmlspecialchars($row["Texto"] ?? "") . "</p>";
-
-        // 5. TAnuncio
-        echo "<p>Tipo de anuncio: " . htmlspecialchars($row["TAnuncio"] ?? "") . "</p>";
-
-        // 6. FPrincipal
-        echo "<p>Descripción principal: " . htmlspecialchars($row["FPrincipal"] ?? "") . "</p>";
-
-        // 7. ALternativo
-        echo "<p>Texto alternativo: " . htmlspecialchars($row["ALternativo"] ?? "") . "</p>";
-
-        // 8. Precio
-        echo "<p>Precio: " . htmlspecialchars($row["Precio"] ?? "") . " €</p>";
-
-        // 9. Ciudad
-        echo "<p>Ciudad: " . htmlspecialchars($row["Ciudad"] ?? "") . "</p>";
-
-        // 10. Pais
-        echo "<p>País: " . htmlspecialchars($row["Pais"] ?? "") . "</p>";
-
-        // 11. Superficie
-        echo "<p>Superficie: " . htmlspecialchars($row["Superficie"] ?? "") . " m²</p>";
-
-        // 12. NHabitaciones
-        echo "<p>Número de habitaciones: " . htmlspecialchars($row["NHabitaciones"] ?? "") . "</p>";
-
-        // 13. NBanyos
-        echo "<p>Número de baños: " . htmlspecialchars($row["NBanyos"] ?? "") . "</p>";
-
-        // 14. Planta
-        echo "<p>Planta: " . htmlspecialchars($row["Planta"] ?? "") . "</p>";
-
-        // 15. FRegistro
-        echo "<p>Fecha de registro: " .
-             (isset($row["FRegistro"]) && $row["FRegistro"] instanceof DateTime
-                 ? $row["FRegistro"]->format("d/m/Y H:i")
-                 : htmlspecialchars($row["FRegistro"] ?? "")) .
-             "</p>";
-
-        // 16. Usuario
-        echo "<p>Usuario: " . htmlspecialchars($row["Usuario"] ?? "") . "</p>";
-
-        echo "<hr>";
+    while ($foto = $resultadoFotos->fetch_assoc()) {
+        $fotos[] = $foto;
     }
 
-    sqlsrv_free_stmt($getProducts);
-    sqlsrv_close($conn);
+    // Calcular el número total de fotografías
+    $totalFotos = count($fotos);
+
+    if (!empty($anuncio["FPrincipal"])) {
+        $totalFotos++;
+    }
+
+    ?>
+
+    <section>
+
+        <h1>
+            <?= htmlspecialchars($anuncio["Titulo"], ENT_QUOTES, "UTF-8") ?>
+        </h1>
+
+        <!-- INFORMACIÓN BÁSICA DEL ANUNCIO -->
+
+        <h2>Información del anuncio</h2>
+
+        <p>
+            <strong>Identificador:</strong>
+            <?= (int)$anuncio["IdAnuncio"] ?>
+        </p>
+
+        <p>
+            <strong>Tipo de vivienda:</strong>
+            <?= htmlspecialchars($anuncio["TipoVivienda"], ENT_QUOTES, "UTF-8") ?>
+        </p>
+
+        <p>
+            <strong>Tipo de anuncio:</strong>
+            <?= htmlspecialchars($anuncio["TipoAnuncio"], ENT_QUOTES, "UTF-8") ?>
+        </p>
+
+        <p>
+            <strong>Precio:</strong>
+            <?= htmlspecialchars((string)$anuncio["Precio"], ENT_QUOTES, "UTF-8") ?> €
+        </p>
+
+        <p>
+            <strong>Ciudad:</strong>
+            <?= htmlspecialchars($anuncio["Ciudad"] ?? "", ENT_QUOTES, "UTF-8") ?>
+        </p>
+
+        <p>
+            <strong>País:</strong>
+            <?= htmlspecialchars($anuncio["Pais"] ?? "", ENT_QUOTES, "UTF-8") ?>
+        </p>
+
+        <p>
+            <strong>Superficie:</strong>
+            <?= htmlspecialchars((string)$anuncio["Superficie"], ENT_QUOTES, "UTF-8") ?> m²
+        </p>
+
+        <p>
+            <strong>Habitaciones:</strong>
+            <?= htmlspecialchars((string)$anuncio["NHabitaciones"], ENT_QUOTES, "UTF-8") ?>
+        </p>
+
+        <p>
+            <strong>Baños:</strong>
+            <?= htmlspecialchars((string)$anuncio["NBanyos"], ENT_QUOTES, "UTF-8") ?>
+        </p>
+
+        <hr>
+
+        <!-- TOTAL DE FOTOGRAFÍAS -->
+
+        <h2>
+            Fotografías del anuncio
+        </h2>
+
+        <p>
+            <strong>
+                Número total de fotografías:
+                <?= $totalFotos ?>
+            </strong>
+        </p>
+
+        
+
+        <div class="galeria">
+
+            <?php if (!empty($anuncio["FPrincipal"])): ?>
+
+                <div class="foto">
+
+                    <img
+                        src="<?= htmlspecialchars($anuncio["FPrincipal"], ENT_QUOTES, "UTF-8") ?>"
+                        alt="<?= htmlspecialchars($anuncio["Alternativo"], ENT_QUOTES, "UTF-8") ?>"
+                    >
+
+                    <p><strong>Fotografía principal</strong></p>
+
+                </div>
+
+            <?php endif; ?>
+
+            <?php foreach ($fotos as $foto): ?>
+
+                <div class="foto">
+
+                    <img
+                        src="<?= htmlspecialchars($foto["Foto"], ENT_QUOTES, "UTF-8") ?>"
+                        alt="<?= htmlspecialchars($foto["Alternativo"], ENT_QUOTES, "UTF-8") ?>"
+                    >
+
+                    <p>
+                        <?= htmlspecialchars($foto["Titulo"] ?? "", ENT_QUOTES, "UTF-8") ?>
+                    </p>
+
+                </div>
+
+            <?php endforeach; ?>
+
+            <?php if ($totalFotos === 0): ?>
+
+                <p>Este anuncio todavía no contiene fotografías.</p>
+
+            <?php endif; ?>
+
+        </div>
+
+    </section>
+
+    <?php
+
+    $stmtFotos->close();
+    $conn->close();
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+
+    <title>Fotografías del anuncio</title>
+
+    <style>
+
+        .galeria {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .foto {
+            width: 250px;
+            text-align: center;
+        }
+
+        .foto img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-    <section>
-        <?php ReadData(); ?>
-    </section>
+    <h1>Galería del anuncio</h1>
+
+    <?php ReadData(); ?>
+
+    <p>
+        <a href="javascript:history.back()">Volver</a>
+    </p>
 
 </body>
+
 </html>

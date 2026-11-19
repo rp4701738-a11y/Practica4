@@ -5,11 +5,6 @@ require_once "conexion.php";
 
 protegerRuta();
 
-// =====================================================
-// OBTENER ANUNCIOS DEL USUARIO
-// =====================================================
-
-
 function ReadData()
 {
     $conn = OpenConnection();
@@ -22,10 +17,14 @@ function ReadData()
                 A.FPrincipal AS Foto,
                 A.Precio,
                 A.Ciudad,
-                A.Pais
+                P.NomPais AS Pais
             FROM Anuncios A
-            INNER JOIN Usuarios U ON A.Usuario = U.IdUsuario
-            WHERE U.NomUsuario = ?";
+            INNER JOIN Usuarios U
+                ON A.Usuario = U.IdUsuario
+            LEFT JOIN Paises P
+                ON A.Pais = P.IdPais
+            WHERE U.NomUsuario = ?
+            ORDER BY A.FRegistro DESC";
 
     $stmt = $conn->prepare($sql);
 
@@ -44,34 +43,68 @@ function ReadData()
 
     while ($anuncio = $resultado->fetch_assoc()) {
         ?>
+
         <section>
-            <a href="verAnuncio.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
-                <img
-                    src="<?= htmlspecialchars($anuncio['Foto'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                    width="50"
-                    height="50"
-                    alt="<?= htmlspecialchars($anuncio['Titulo'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+
+            <h3>
+                <?= htmlspecialchars($anuncio['Titulo'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+            </h3>
+
+            <a href="verFotos.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
+
+                <?php if (!empty($anuncio['Foto'])): ?>
+
+                    <img
+                        src="<?= htmlspecialchars($anuncio['Foto'], ENT_QUOTES, 'UTF-8') ?>"
+                        width="150"
+                        height="120"
+                        alt="Fotografía principal del anuncio">
+
+                <?php else: ?>
+
+                    <p>Sin fotografía principal</p>
+
+                <?php endif; ?>
+
             </a>
 
-            <h3><?= htmlspecialchars($anuncio['Titulo'] ?? '', ENT_QUOTES, 'UTF-8') ?></h3>
+            <p>
+                Ciudad:
+                <?= htmlspecialchars($anuncio['Ciudad'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+            </p>
 
-            <p>Ciudad: <?= htmlspecialchars($anuncio['Ciudad'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
+            <p>
+                País:
+                <?= htmlspecialchars($anuncio['Pais'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+            </p>
 
-            <p>País (ID): <?= htmlspecialchars((string)($anuncio['Pais'] ?? ''), ENT_QUOTES, 'UTF-8') ?></p>
+            <p>
+                Precio:
+                <?= htmlspecialchars((string)($anuncio['Precio'] ?? ''), ENT_QUOTES, 'UTF-8') ?> €
+            </p>
 
-            <p>Precio: <?= htmlspecialchars((string)($anuncio['Precio'] ?? ''), ENT_QUOTES, 'UTF-8') ?> €</p>
+            <p>
+                <a href="verFotos.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
+                    Ver todas las fotografías del anuncio
+                </a>
+            </p>
 
-            <a href="anadirFoto.php?anuncio=<?= (int)$anuncio['IdAnuncio'] ?>">
-                Añadir foto
-            </a>
+            <p>
+                <a href="anadirFoto.php?anuncio=<?= (int)$anuncio['IdAnuncio'] ?>">
+                    Añadir fotografía
+                </a>
+            </p>
+
         </section>
+
+        <hr>
+
         <?php
     }
 
     $stmt->close();
     $conn->close();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -80,6 +113,7 @@ function ReadData()
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Mis anuncios</title>
 
     <link rel="stylesheet" href="style/partePrivada.css">
@@ -111,6 +145,8 @@ function ReadData()
     </nav>
 
     <?php mostrarBarraEstilos(); ?>
+
+    <h1>Mis anuncios publicados</h1>
 
     <?php ReadData(); ?>
 
