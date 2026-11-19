@@ -1,71 +1,171 @@
 <?php
 require_once "permitidos.php";
 
+// =====================================================
+// CONEXIÓN A MYSQL
+// =====================================================
+
+function OpenConnection()
+{
+    $conn = new mysqli("localhost", "wwwdata", "abc", "pibd");
+
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
+
+    $conn->set_charset("utf8mb4");
+
+    return $conn;
+}
+
+// =====================================================
+// COMPROBAR MÉTODO POST
+// =====================================================
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     session_write_close();
     header("Location: index.php");
     exit();
 }
 
-$usuario = $_POST["loginUser"] ?? "";
-$contrasena = $_POST["loginPass"] ?? "";
-$recordarme = isset($_POST["recordarme"]) && $_POST["recordarme"] === "1";
-$origen = ($_POST["origen"] ?? "index") === "signIn" ? "signIn.php" : "index.php";
+// =====================================================
+// RECUPERAR DATOS
+// =====================================================
 
-if (trim($usuario) === "" || trim($contrasena) === "") {
-    $_SESSION["flash"]["error"] = "Debes introducir un usuario y una contraseña.";
+$usuario = trim($_POST["loginUser"] ?? "");
+$contrasena = $_POST["loginPass"] ?? "";
+
+$recordarme = isset($_POST["recordarme"]) &&
+              $_POST["recordarme"] === "1";
+
+$origen = ($_POST["origen"] ?? "index") === "signIn"
+          ? "signIn.php"
+          : "index.php";
+
+// =====================================================
+// VALIDAR CAMPOS
+// =====================================================
+
+if ($usuario === "" || $contrasena === "") {
+
+    $_SESSION["flash"]["error"] =
+        "Debes introducir un usuario y una contraseña.";
+
     session_write_close();
     header("Location: " . $origen);
     exit();
 }
 
-$usuarioEncontrado = null;
-foreach ($usuarios as $datos) {
-    if (trim($usuario) === $datos["usuario"] && $contrasena === $datos["contrasena"]) {
-        $usuarioEncontrado = $datos;
-        break;
-    }
+// =====================================================
+// CONECTAR CON MYSQL
+// =====================================================
+
+$conn = OpenConnection();
+
+// =====================================================
+// BUSCAR USUARIO
+// =====================================================
+
+$sql = "SELECT
+            IdUsuario,
+            NomUsuario,
+            Clave,
+            Email,
+            Foto,
+            FRegistro,
+            Estilo
+        FROM Usuarios
+        WHERE NomUsuario = ?";
+
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Error al preparar consulta: " . $conn->error);
 }
+
+$stmt->bind_param("s", $usuario);
+$stmt->execute();
+
+$resultado = $stmt->get_result();
+
+$usuarioEncontrado = $resultado->fetch_assoc();
+
+$stmt->close();
+
+// =====================================================
+// COMPROBAR CONTRASEÑA
+// =====================================================
+
+$claveCorrecta = false;
 
 if ($usuarioEncontrado !== null) {
-    $ahora = date("d/m/y \a \l\a\s H:i");
 
-    $_SESSION["usuario"] = $usuarioEncontrado["usuario"];
-    $_SESSION["nombre"] = $usuarioEncontrado["nombre"];
+    $claveGuardada = $usuarioEncontrado["Clave"];
 
-    // Si el usuario ya había personalizado sus estilos, cargamos su selección; si no, los de por defecto de permitidos.php
-    $cookieEstilosUsuario = "estilos_custom_" . $usuarioEncontrado["usuario"];
-    if (isset($_COOKIE[$cookieEstilosUsuario])) {
-        $dec = json_decode($_COOKIE[$cookieEstilosUsuario], true);
-        $_SESSION["estilos"] = is_array($dec) ? $dec : $usuarioEncontrado["estilos"];
-    } else {
-        $_SESSION["estilos"] = $usuarioEncontrado["estilos"];
+    // Comprobar contraseña cifrada
+    if (password_verify($contrasena, $claveGuardada)) {
+
+        $claveCorrecta = true;
+
     }
+    // Comprobar contraseña antigua en texto plano
+    elseif (hash_equals($claveGuardada, $contrasena)) {
 
-    if ($recordarme) {
-        $caduca90Dias = time() + (90 * 24 * 60 * 60);
-        $_SESSION["recordado"] = true;
-        $_SESSION["ultima_visita"] = $_COOKIE["recordar_visita"] ?? $ahora;
+        // Convertir contraseña a hash
+        $nuevoHash = password_hash(
+            $contrasena,
+            PASSWORD_DEFAULT
+        );
 
-        setcookie("recordar_token", $usuarioEncontrado["token"], $caduca90Dias, "/", "", false, true);
-        setcookie("recordar_visita", $ahora, $caduca90Dias, "/", "", false, true);
-        setcookie("recordar_expira", (string)$caduca90Dias, $caduca90Dias, "/", "", false, true);
-    } else {
-        $_SESSION["recordado"] = false;
-        unset($_SESSION["ultima_visita"]);
+        $stmtUpdate = $conn->prepare(
+            "UPDATE Usuarios SET Clave = ? WHERE IdUsuario = ?"
+        );
 
-        setcookie("recordar_token", "", time() - 3600, "/", "", false, true);
-        setcookie("recordar_visita", "", time() - 3600, "/", "", false, true);
-        setcookie("recordar_expira", "", time() - 3600, "/", "", false, true);
+        $stmtUpdate->bind_param(
+            "si",
+            $nuevoHash,
+            $usuarioEncontrado["IdUsuario"]
+        );
+
+        $stmtUpdate->execute();
+        $stmtUpdate->close();
+
+        $claveCorrecta = true;
     }
+}
+
+$conn->close();
+
+// =====================================================
+// INICIAR SESIÓN Y REDIRIGIR
+// =====================================================
+
+if ($claveCorrecta) {
+
+    session_regenerate_id(true);
+
+    $_SESSION["usuario"] = $usuarioEncontrado["NomUsuario"];
+    $_SESSION["nombre"] = $usuarioEncontrado["NomUsuario"];
+    $_SESSION["estilo"] = $usuarioEncontrado["Estilo"];
+    $_SESSION["idUsuario"] = $usuarioEncontrado["IdUsuario"];
 
     session_write_close();
+
     header("Location: partePrivada.php");
     exit();
+
 } else {
-    $_SESSION["flash"]["error"] = "El usuario o la contraseña son incorrectos.";
+
+    $_SESSION["flash"]["error"] =
+        "El usuario o la contraseña son incorrectos.";
+
     session_write_close();
+
     header("Location: " . $origen);
     exit();
 }
-?>
+
+$conn->close();
+
+// =====================================================
+// INICIAR SESIÓN SI

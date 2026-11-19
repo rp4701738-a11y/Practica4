@@ -51,6 +51,9 @@ session_write_close();
         <p>Ciudad: <?= htmlspecialchars($anuncioActual['ciudad']) ?></p>
         <p>País: <?= htmlspecialchars($anuncioActual['pais']) ?></p>
         <p>Precio: <?= htmlspecialchars($anuncioActual['precio']) ?></p>
+        <a href="verAnuncio.php?id=<?= (int)$anuncioActual['id'] ?>">
+        <button type="button">Ver más detalle</button>
+        </a>
     </section>
 
     <?php mostrarPanelUltimosAnuncios($catalogoAnuncios); ?>

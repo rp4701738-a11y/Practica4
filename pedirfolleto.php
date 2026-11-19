@@ -1,6 +1,49 @@
 <?php
 require_once "permitidos.php";
+require_once "conexion.php";
 protegerRuta();
+$usuarioActual = $_SESSION["idUsuario"] ?? null;
+function ObtenerAnuncios($usuario)
+{
+    if ($usuario === null || !filter_var($usuario, FILTER_VALIDATE_INT)) {
+        return [];
+    }
+
+    $conn = OpenConnection();
+
+    // Obtener los anuncios pertenecientes al usuario
+    $sql = "SELECT IdAnuncio, Titulo
+            FROM Anuncios
+            WHERE Usuario = ?
+            ORDER BY Titulo";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if (!$stmt) {
+        die("Error en la consulta: " . mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $usuario);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        die("Error al ejecutar la consulta: " . mysqli_stmt_error($stmt));
+    }
+
+    $resultado = mysqli_stmt_get_result($stmt);
+
+    $anuncios = [];
+
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $anuncios[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+
+    return $anuncios;
+}
+
+$catalogoAnuncios = ObtenerAnuncios($usuarioActual);
 session_write_close();
 
 function cal($m, $i) {
@@ -140,12 +183,25 @@ function cal3($m, $i) {
         <label>Resolución de las fotos: <input type="number" name="resolucion" step="150" value="150" min="150" max="900" required> DPI</label><br><br>
 
         <label for="anuncio">Anuncio:</label>
-        <input list="anuncios" name="anuncio" id="anuncio" required>
-        <datalist id="anuncios">
-            <option value="Piso en Alicante">
-            <option value="Casa rural de Crevillente">
-            <option value="Apartamento en Elda">
-        </datalist><br>
+
+<select name="anuncio" id="anuncio" required>
+    <option value="">Selecciona un anuncio</option>
+
+    <?php foreach ($catalogoAnuncios as $anuncio): ?>
+
+        <option value="<?= (int)$anuncio['IdAnuncio'] ?>">
+            <?= htmlspecialchars(
+                $anuncio['Titulo'],
+                ENT_QUOTES,
+                'UTF-8'
+            ) ?>
+        </option>
+
+    <?php endforeach; ?>
+
+</select>
+        <br>
+
 
         <label>¿Cuándo quiere recibir el envío postal?: <input type="date" name="fecha"></label><br>
         <label>¿Impresión a color o en blanco y negro?</label><br>
