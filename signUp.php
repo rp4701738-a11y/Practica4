@@ -1,8 +1,30 @@
 <?php
 require_once "permitidos.php";
+require_once "conexion.php";
+require_once "selectPaises.php";
+
 $erroresFlash = obtenerFlash("errores_registro");
-$datosPrevios = obtenerFlash("datos_registro") ?? [];
+$datosFormulario = obtenerFlash("datos_registro") ?? [];
 $enlaceInicio = isset($_SESSION["usuario"]) ? "index2.php" : "index.php";
+$paises = [];
+$errorBD = "";
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$conn = null;
+try {
+    $conn = OpenConnection();
+    $paises = obtenerPaises($conn);
+} catch (mysqli_sql_exception $e) {
+    error_log("Error en signUp.php: " . $e->getMessage());
+    $errorBD = "No se pudo cargar la lista de países en este momento.";
+} finally {
+    if ($conn instanceof mysqli) {
+        $conn->close();
+    }
+}
+
+$actionFormulario = "signUpRespuesta.php";
+$textoBoton = "Enviar";
 session_write_close();
 ?>
 <!DOCTYPE html>
@@ -43,42 +65,23 @@ session_write_close();
     <section id="signIn">
         <h1>Registro:</h1>
 
+        <?php if ($errorBD !== ""): ?>
+            <p style="color: red; font-weight: bold;"><?= htmlspecialchars($errorBD, ENT_QUOTES, 'UTF-8') ?></p>
+        <?php endif; ?>
+
         <?php if (!empty($erroresFlash)): ?>
             <div style="border: 2px solid red; padding: 12px; background-color: #ffe6e6; margin-bottom: 15px;">
                 <p style="color: red; font-weight: bold;">Se han encontrado errores en los datos introducidos:</p>
                 <ul>
                     <?php foreach ($erroresFlash as $err): ?>
-                        <li style="color: red;"><?= htmlspecialchars($err) ?></li>
+                        <li style="color: red;"><?= htmlspecialchars((string)$err, ENT_QUOTES, 'UTF-8') ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
         <?php endif; ?>
 
-        <form id="signupForm" action="signUpRespuesta.php" method="post" novalidate>
-            <label>Nombre de usuario: <input type="text" id="username" name="username" value="<?= htmlspecialchars($datosPrevios['username'] ?? '') ?>"></label>
-            <span id="err-username" class="error-msg"></span>
+        <?php include "formUsuario.php"; ?>
 
-            <br><br><label>Contraseña: <input type="password" id="password" name="password"></label>
-            <span id="err-password" class="error-msg"></span>
-
-            <br><br><label>Repita la contraseña: <input type="password" id="repeatPassword" name="repeatPassword"></label>
-            <span id="err-repeatPassword" class="error-msg"></span>
-
-            <br><br><label>Email: <input type="text" id="email" name="email" value="<?= htmlspecialchars($datosPrevios['email'] ?? '') ?>"></label>
-            <span id="err-email" class="error-msg"></span>
-
-            <br><br><label>Sexo: <input type="text" id="sexo" name="sexo" value="<?= htmlspecialchars($datosPrevios['sexo'] ?? '') ?>"></label>
-            <span id="err-sexo" class="error-msg"></span>
-
-            <br><br><label>Fecha de nacimiento: <input type="text" id="fechaNacimiento" name="fechaNacimiento" value="<?= htmlspecialchars($datosPrevios['fechaNacimiento'] ?? '') ?>"></label>
-            <span id="err-fechaNacimiento" class="error-msg"></span>
-
-            <br><br><label>Ciudad de residencia: <input type="text" id="ciudad" name="ciudad" value="<?= htmlspecialchars($datosPrevios['ciudad'] ?? '') ?>"></label>
-            <br><br><label>País de residencia: <input type="text" id="pais" name="pais" value="<?= htmlspecialchars($datosPrevios['pais'] ?? '') ?>"></label>
-            <br><br><label id="foto">Foto: <input type="file" id="fotoFile" name="fotoFile"></label>
-
-            <br><br><input type="submit" value="Enviar">
-        </form>
         <p>¿Ya tienes una cuenta? <a href="signIn.php">Inicia sesión</a></p>
     </section>
 
@@ -87,7 +90,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

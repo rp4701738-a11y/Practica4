@@ -1,4 +1,3 @@
-
 <?php
 require_once "conexion.php";
 
@@ -77,11 +76,81 @@ function ReadData()
         </section>
 
         <?php
+        mysqli_free_result($result);
+        mysqli_stmt_close($stmt);
+
+        $sqlAnuncios = "SELECT
+                            IdAnuncio,
+                            Titulo,
+                            FPrincipal,
+                            Alternativo,
+                            Ciudad,
+                            Precio
+                        FROM Anuncios
+                        WHERE Usuario = ?
+                        ORDER BY FRegistro DESC";
+
+        $stmtAnuncios = mysqli_prepare($conn, $sqlAnuncios);
+
+        if (!$stmtAnuncios) {
+            echo "<p>Error al consultar los anuncios del usuario.</p>";
+        } else {
+            mysqli_stmt_bind_param($stmtAnuncios, "i", $Id);
+            mysqli_stmt_execute($stmtAnuncios);
+            $resultAnuncios = mysqli_stmt_get_result($stmtAnuncios);
+            ?>
+
+            <section>
+
+                <h2>Anuncios del usuario (<?= mysqli_num_rows($resultAnuncios) ?>)</h2>
+
+                <?php if (mysqli_num_rows($resultAnuncios) === 0): ?>
+                    <p>Este usuario no tiene anuncios publicados.</p>
+                <?php else: ?>
+                    <?php while ($anuncio = mysqli_fetch_assoc($resultAnuncios)): ?>
+                        <article>
+                            <h3>
+                                <a href="anuncio.php?id=<?= (int)$anuncio["IdAnuncio"] ?>">
+                                    <?= htmlspecialchars($anuncio["Titulo"] ?? "", ENT_QUOTES, "UTF-8") ?>
+                                </a>
+                            </h3>
+
+                            <?php if (!empty($anuncio["FPrincipal"])): ?>
+                                <a href="anuncio.php?id=<?= (int)$anuncio["IdAnuncio"] ?>">
+                                    <img
+                                        src="<?= htmlspecialchars($anuncio["FPrincipal"], ENT_QUOTES, "UTF-8") ?>"
+                                        width="200"
+                                        alt="<?= htmlspecialchars($anuncio["Alternativo"] ?? $anuncio["Titulo"] ?? "", ENT_QUOTES, "UTF-8") ?>"
+                                    >
+                                </a>
+                            <?php endif; ?>
+
+                            <p>
+                                <strong>Ciudad:</strong>
+                                <?= htmlspecialchars($anuncio["Ciudad"] ?? "", ENT_QUOTES, "UTF-8") ?>
+                            </p>
+
+                            <p>
+                                <strong>Precio:</strong>
+                                <?= htmlspecialchars(number_format((float)($anuncio["Precio"] ?? 0), 2, ",", "."), ENT_QUOTES, "UTF-8") ?> €
+                            </p>
+                        </article>
+                        <hr>
+                    <?php endwhile; ?>
+                <?php endif; ?>
+
+            </section>
+
+            <?php
+            mysqli_free_result($resultAnuncios);
+            mysqli_stmt_close($stmtAnuncios);
+        }
     } else {
         echo "<p>No se ha encontrado el usuario.</p>";
+        mysqli_free_result($result);
+        mysqli_stmt_close($stmt);
     }
 
-    mysqli_stmt_close($stmt);
     mysqli_close($conn);
 }
 ?>

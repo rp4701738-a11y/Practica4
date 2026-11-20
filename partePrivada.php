@@ -53,11 +53,12 @@ session_write_close();
     </form>
 
     <ul class="boton">
+        <li><a href="misDatos.php"><span>Mis datos</span></a></li>
         <li><a href="crearAnuncio.php"><span>Crear anuncio</span></a></li>
         <li><a href="misAnuncios.php"><span>Mis anuncios</span></a></li>
         <li><a href="pedirfolleto.php"><span>Diseñar folleto publicitario</span></a></li>
         <li><a href="mensajes.php"><span>Mis mensajes</span></a></li>
-        <li><a href="configurar.php"><span>Ver diferentes estilos</span></a></li>
+        <li><a href="configurar.php"><span>Configurar</span></a></li>
         <li><a href="partePrivada.php?salir=1"><span>Salir (Cerrar sesión)</span></a></li>
     </ul>
 

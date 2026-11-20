@@ -9,7 +9,7 @@ CREATE DATABASE pibd
 USE pibd;
 
 -- =========================================================================
--- 2. TABLAS MAESTRAS (Con datos fijos, como tipo de mensaje o países)
+-- 2. TABLAS MAESTRAS (con datos modelo, como tipo de anuncio, países...)
 -- =========================================================================
 
 CREATE TABLE Paises (
@@ -191,44 +191,47 @@ INSERT INTO TiposMensajes (NomTMensaje) VALUES
 -- 5. INSERCIÓN DE DATOS DE PRUEBA
 -- =========================================================================
 
--- Usuarios (Nota: las claves están en texto plano para pruebas iniciales;
--- sustituir por hashes si se implementa password_hash() en PHP)
 INSERT INTO Usuarios (NomUsuario, Clave, Email, Sexo, FNacimiento, Ciudad, Pais, Foto, FRegistro, Estilo) VALUES
-('ana_garcia', 'clave1234', 'ana.garcia@example.com', 1, '1995-04-12', 'Alicante', 1, 'imagenes/ana.jpg', '2026-09-10 10:15:00', 1),
-('carlos_m', 'clave1234', 'carlos.m@example.com', 0, '1990-11-23', 'Valencia', 1, 'imgagenes/carlos.jpg', '2026-09-15 16:30:00', 2),
-('laura_p', 'clave1234', 'laura.p@example.com', 1, '1998-07-05', 'París', 2, 'imgagenes/laura.jpg', '2026-10-01 09:00:00', 1);
+('usuario1', '1234', 'usuario1@buscasa.es', 0, '1996-03-15', 'Alicante', 1, 'imagenes/casa1.jpeg', '2026-10-01 10:15:00', 2),
+('usuario2', '5678', 'usuario2@buscasa.es', 1, '1992-08-22', 'Valencia', 1, 'imagenes/apartamento1.jpeg', '2026-10-08 16:30:00', 3),
+('usuario3', 'abcd', 'usuario3@buscasa.es', 0, '1989-11-04', 'París', 2, 'imagenes/casa1.jpeg', '2026-10-15 09:45:00', 4),
+('usuario4', 'efgh', 'usuario4@buscasa.es', 1, '1999-05-19', 'Lisboa', 3, 'imagenes/apartamento1.jpeg', '2026-10-22 18:20:00', 7);
 
--- Anuncios (9 anuncios variados en tipo, vivienda, ciudad, país y fecha de registro)
 INSERT INTO Anuncios (TAnuncio, TVivienda, FPrincipal, Alternativo, Titulo, Precio, Texto, Ciudad, Pais, Superficie, NHabitaciones, NBanyos, Planta, Anyo, FRegistro, Usuario) VALUES
-(2, 2, 'imagenes/anuncio1.jpg', 'Salón luminoso de piso céntrico en Alicante', 'Piso luminoso en el centro de Alicante', 850.00, 'Vivienda totalmente amueblada a cinco minutos de la playa y del tranvía.', 'Alicante', 1, 85.50, 3, 2, 4, 2010, '2026-10-05 11:00:00', 1),
-(1, 1, 'imagenes/anuncio2.jpg', 'Fachada moderna de obra nueva en Valencia', 'Promoción obra nueva junto a Ruzafa', 265000.00, 'Viviendas de diseño con calificación energética A y piscina comunitaria.', 'Valencia', 1, 105.00, 3, 2, 2, 2026, '2026-10-10 12:30:00', 2),
-(2, 3, 'imagenes/anuncio3.jpg', 'Oficina diáfana con ventanales en Madrid', 'Oficina moderna en zona financiera', 1400.00, 'Espacio de trabajo diáfano con fibra óptica, climatización y sala de juntas.', 'Madrid', 1, 120.00, 2, 1, 6, 2018, '2026-10-14 09:45:00', 1),
-(2, 4, 'imagenes/anuncio4.jpg', 'Local comercial a pie de calle en Alicante', 'Local comercial en avenida principal', 1100.00, 'Amplio escaparate, salida de humos y almacén trasero en zona muy transitada.', 'Alicante', 1, 95.00, 1, 1, 0, 2005, '2026-10-18 17:20:00', 2),
-(1, 5, 'imagenes/anuncio5.jpg', 'Plaza de garaje amplia en el centro de Sevilla', 'Plaza de garaje para coche grande', 19500.00, 'Fácil maniobra, puerta automática y vigilancia 24 horas.', 'Sevilla', 1, 16.50, 0, 0, -1, 2015, '2026-10-22 14:10:00', 3),
-(2, 2, 'imagenes/anuncio6.jpg', 'Apartamento con vistas al Sena en París', 'Apartamento reformado en Le Marais', 1850.00, 'Encantador apartamento con suelos de parqué y balcón exterior.', 'París', 2, 62.00, 2, 1, 3, 1985, '2026-10-27 18:00:00', 3),
-(1, 2, 'imagenes/anuncio7.jpg', 'Chalet independiente con jardín en Lisboa', 'Casa familiar con patio en Lisboa', 420000.00, 'Casa espaciosa en barrio tranquilo con jardín privado y garaje.', 'Lisboa', 3, 180.00, 4, 3, 0, 2012, '2026-11-02 10:05:00', 2),
-(2, 2, 'imagenes/anuncio8.jpg', 'Estudio reformado cerca del Coliseo en Roma', 'Estudio acogedor en el centro de Roma', 1200.00, 'Ideal para estancias largas, cocina americana y aire acondicionado.', 'Roma', 4, 48.00, 1, 1, 2, 1995, '2026-11-08 13:40:00', 3),
-(1, 2, 'imagenes/anuncio9.jpg', 'Ático con terraza amplia en Alicante', 'Ático dúplex con vistas al mar', 310000.00, 'Terraza de 40 metros cuadrados, orientación sur y plaza de garaje incluida.', 'Alicante', 1, 115.00, 3, 2, 7, 2021, '2026-11-15 19:15:00', 1);
+(2, 2, 'imagenes/apartamento1.jpeg', 'Salón luminoso de piso céntrico en Alicante', 'Piso luminoso en el centro de Alicante', 850.00, 'Vivienda totalmente amueblada a cinco minutos de la playa y del tranvía.', 'Alicante', 1, 85.50, 3, 2, 4, 2010, '2026-10-25 11:00:00', 1),
+(1, 1, 'imagenes/casa1.jpeg', 'Fachada moderna de obra nueva en Valencia', 'Promoción obra nueva junto a Ruzafa', 265000.00, 'Viviendas de diseño con calificación energética A y piscina comunitaria.', 'Valencia', 1, 105.00, 3, 2, 2, 2026, '2026-10-28 12:30:00', 2),
+(2, 3, 'imagenes/apartamento1.jpeg', 'Oficina diáfana con ventanales en Madrid', 'Oficina moderna en zona financiera', 1400.00, 'Espacio de trabajo diáfano con fibra óptica, climatización y sala de juntas.', 'Madrid', 1, 120.00, 2, 1, 6, 2018, '2026-10-30 09:45:00', 1),
+(2, 4, 'imagenes/casa1.jpeg', 'Local comercial a pie de calle en Alicante', 'Local comercial en avenida principal', 1100.00, 'Amplio escaparate, salida de humos y almacén trasero en zona muy transitada.', 'Alicante', 1, 95.00, 1, 1, 0, 2005, '2026-11-02 17:20:00', 2),
+(1, 5, 'imagenes/apartamento1.jpeg', 'Plaza de garaje amplia en el centro de Sevilla', 'Plaza de garaje para coche grande', 19500.00, 'Fácil maniobra, puerta automática y vigilancia 24 horas.', 'Sevilla', 1, 16.50, 0, 0, -1, 2015, '2026-11-05 14:10:00', 3),
+(2, 2, 'imagenes/apartamento1.jpeg', 'Apartamento con vistas al Sena en París', 'Apartamento reformado en Le Marais', 1850.00, 'Encantador apartamento con suelos de parqué y balcón exterior.', 'París', 2, 62.00, 2, 1, 3, 1985, '2026-11-08 18:00:00', 3),
+(1, 2, 'imagenes/casa1.jpeg', 'Chalet independiente con jardín en Lisboa', 'Casa familiar con patio en Lisboa', 420000.00, 'Casa espaciosa en barrio tranquilo con jardín privado y garaje.', 'Lisboa', 3, 180.00, 4, 3, 0, 2012, '2026-11-11 10:05:00', 4),
+(2, 2, 'imagenes/apartamento1.jpeg', 'Estudio reformado cerca del Coliseo en Roma', 'Estudio acogedor en el centro de Roma', 1200.00, 'Ideal para estancias largas, cocina americana y aire acondicionado.', 'Roma', 4, 48.00, 1, 1, 2, 1995, '2026-11-14 13:40:00', 4),
+(1, 2, 'imagenes/casa1.jpeg', 'Ático con terraza amplia y vistas en Alicante', 'Ático dúplex con vistas al mar', 310000.00, 'Terraza de 40 metros cuadrados, orientación sur y plaza de garaje incluida.', 'Alicante', 1, 115.00, 3, 2, 7, 2021, '2026-11-16 19:15:00', 1),
+(2, 5, 'imagenes/apartamento1.jpeg', 'Plaza de garaje cubierta en Berlín centro', 'Garaje vigilado en Mitte', 180.00, 'Plaza subterránea con acceso 24 horas y cargador eléctrico.', 'Berlín', 5, 15.00, 0, 0, -2, 2020, '2026-11-18 11:30:00', 2);
 
--- Fotos adicionales asociadas a anuncios
 INSERT INTO Fotos (Titulo, Foto, Alternativo, Anuncio) VALUES
-('Cocina equipada', 'imagenes/anuncio1_cocina.jpg', 'Cocina equipada del piso céntrico en Alicante', 1),
-('Dormitorio principal', 'imagenes/anuncio1_hab.jpg', 'Dormitorio principal luminoso en Alicante', 1),
-('Terraza comunitaria', 'imagenes/anuncio2_terraza.jpg', 'Terraza comunitaria de obra nueva en Valencia', 2),
-('Sala de reuniones', 'imagenes/anuncio3_sala.jpg', 'Sala de reuniones de la oficina en Madrid', 3),
-('Vista nocturna de la terraza', 'imagenes/anuncio9_terraza.jpg', 'Terraza amplia con vistas al mar en Alicante', 9);
+('Cocina equipada', 'imagenes/apartamento1.jpeg', 'Cocina equipada del piso céntrico en Alicante', 1),
+('Dormitorio principal', 'imagenes/casa1.jpeg', 'Dormitorio principal luminoso en Alicante', 1),
+('Terraza comunitaria', 'imagenes/casa1.jpeg', 'Terraza comunitaria de obra nueva en Valencia', 2),
+('Sala de reuniones', 'imagenes/apartamento1.jpeg', 'Sala de reuniones de la oficina en Madrid', 3),
+('Escaparate exterior', 'imagenes/casa1.jpeg', 'Escaparate amplio del local comercial en Alicante', 4),
+('Balcón exterior', 'imagenes/apartamento1.jpeg', 'Balcón exterior del apartamento en París', 6),
+('Jardín trasero', 'imagenes/casa1.jpeg', 'Jardín privado trasero de la casa en Lisboa', 7),
+('Vista nocturna de la terraza', 'imagenes/casa1.jpeg', 'Terraza amplia con vistas al mar en Alicante', 9);
 
--- Mensajes cruzados entre usuarios
 INSERT INTO Mensajes (TMensaje, Texto, Anuncio, UsuOrigen, UsuDestino, FRegistro) VALUES
-(1, 'Hola Ana, ¿los gastos de comunidad están incluidos en el alquiler?', 1, 2, 1, '2026-10-06 10:00:00'),
-(2, 'Me gustaría concertar una visita para ver la promoción de Ruzafa esta semana.', 2, 1, 2, '2026-10-12 15:20:00'),
-(3, 'Estoy interesada en el ático, ¿aceptarías una oferta de 295.000 euros?', 9, 3, 1, '2026-11-16 11:30:00'),
-(1, '¿El apartamento de París admite mascotas?', 6, 1, 3, '2026-11-01 18:45:00');
+(1, 'Hola, ¿los gastos de comunidad están incluidos en el precio del alquiler?', 1, 2, 1, '2026-10-26 10:00:00'),
+(2, 'Me gustaría concertar una visita para ver la promoción de Ruzafa esta semana.', 2, 1, 2, '2026-10-29 15:20:00'),
+(3, 'Estoy interesado en el ático, ¿aceptarías una oferta de 295.000 euros?', 9, 3, 1, '2026-11-17 11:30:00'),
+(1, '¿El apartamento de París admite mascotas pequeñas?', 6, 1, 3, '2026-11-09 18:45:00'),
+(2, '¿Podríamos visitar la casa de Lisboa el próximo viernes por la tarde?', 7, 2, 4, '2026-11-12 09:15:00'),
+(1, '¿El estudio en Roma tiene ascensor y calefacción individual?', 8, 3, 4, '2026-11-15 16:05:00'),
+(3, 'Te propongo un alquiler anual con pago semestral por el local de Alicante.', 4, 4, 2, '2026-11-16 12:10:00'),
+(2, '¿Es posible probar si cabe un SUV grande en la plaza de Sevilla?', 5, 4, 3, '2026-11-18 17:50:00');
 
--- Solicitudes de folleto de prueba
 INSERT INTO Solicitudes (Anuncio, Texto, Nombre, Email, Direccion, Telefono, Color, Copias, Resolucion, Fecha, IColor, IPrecio, FRegistro, Coste) VALUES
-(1, 'Folleto para repartir en la zona centro', 'Ana García López', 'ana.garcia@example.com', 'Av. Alfonso el Sabio 12, 3ºB, 03004 Alicante, España', '600123456', '#1E3A8A', 20, 300, '2026-11-25', TRUE, TRUE, '2026-11-10 12:00:00', 18.50),
-(2, 'Impresión en alta resolución para feria inmobiliaria', 'Carlos Martínez Ruiz', 'carlos.m@example.com', 'C/ Colón 45, 1ºA, 46004 Valencia, España', '611987654', '#000000', 50, 600, '2026-12-01', FALSE, TRUE, '2026-11-12 17:10:00', 34.00);
+(1, 'Folleto para repartir en la zona centro', 'Usuario Uno', 'usuario1@buscasa.es', 'Av. Alfonso el Sabio 12, 3ºB, 03004 Alicante, España', '600123456', '#1E3A8A', 20, 300, '2026-11-25', TRUE, TRUE, '2026-11-10 12:00:00', 18.50),
+(2, 'Impresión en alta resolución para feria inmobiliaria', 'Usuario Dos', 'usuario2@buscasa.es', 'C/ Colón 45, 1ºA, 46004 Valencia, España', '611987654', '#000000', 50, 600, '2026-12-01', FALSE, TRUE, '2026-11-12 17:10:00', 34.00);
 
 -- =========================================================================
 -- 6. CREACIÓN DEL USUARIO PARA LA CONEXIÓN WEB (PERMISOS MÍNIMOS)

@@ -1,6 +1,41 @@
 <?php
 require_once "permitidos.php";
+require_once "conexion.php";
+require_once "selectPaises.php";
+
 $enlaceInicio = isset($_SESSION["usuario"]) ? "index2.php" : "index.php";
+$tiposAnuncios = [];
+$tiposViviendas = [];
+$paises = [];
+$errorBD = "";
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$conn = null;
+try {
+    $conn = OpenConnection();
+
+    $resTA = $conn->query("SELECT IdTAnuncio, NomTAnuncio FROM TiposAnuncios ORDER BY IdTAnuncio ASC");
+    while ($fila = $resTA->fetch_assoc()) {
+        $tiposAnuncios[] = $fila;
+    }
+    $resTA->close();
+
+    $resTV = $conn->query("SELECT IdTVivienda, NomTVivienda FROM TiposViviendas ORDER BY IdTVivienda ASC");
+    while ($fila = $resTV->fetch_assoc()) {
+        $tiposViviendas[] = $fila;
+    }
+    $resTV->close();
+
+    $paises = obtenerPaises($conn);
+} catch (mysqli_sql_exception $e) {
+    error_log("Error en busqueda.php: " . $e->getMessage());
+    $errorBD = "Error al cargar los filtros desde la base de datos.";
+} finally {
+    if ($conn instanceof mysqli) {
+        $conn->close();
+    }
+}
+
 session_write_close();
 ?>
 <!DOCTYPE html>
@@ -36,59 +71,42 @@ session_write_close();
     <h2>Búsqueda avanzada</h2>
     <hr size="3" color="black">
 
+    <?php if ($errorBD !== ""): ?>
+        <p style="color: red; font-weight: bold;"><?= htmlspecialchars($errorBD, ENT_QUOTES, 'UTF-8') ?></p>
+    <?php endif; ?>
+
     <form action="resultadoBusqueda.php" method="GET">
+        <input type="hidden" name="avanzada" value="1">
         <section>
-            <label>Tipo de venta:</label>
-            <input type="radio" id="venta" name="tipo-venta" value="Venta">
-            <label for="venta">Venta</label>
-            <input type="radio" id="alquiler" name="tipo-venta" value="Alquiler">
-            <label for="alquiler">Alquiler</label><br>
+            <label for="tipo_anuncio">Tipo de anuncio:</label>
+            <select id="tipo_anuncio" name="tipo_anuncio">
+                <option value="">-- Todos los tipos --</option>
+                <?php foreach ($tiposAnuncios as $ta): ?>
+                    <option value="<?= (int)$ta['IdTAnuncio'] ?>"><?= htmlspecialchars((string)$ta['NomTAnuncio'], ENT_QUOTES, 'UTF-8') ?></option>
+                <?php endforeach; ?>
+            </select>
         </section>
         <section>
-            <label>Tipo de vivienda: <input type="text" name="tipo-vivienda"></label>
+            <label for="tipo_vivienda">Tipo de vivienda:</label>
+            <select id="tipo_vivienda" name="tipo_vivienda">
+                <option value="">-- Todos los tipos --</option>
+                <?php foreach ($tiposViviendas as $tv): ?>
+                    <option value="<?= (int)$tv['IdTVivienda'] ?>"><?= htmlspecialchars((string)$tv['NomTVivienda'], ENT_QUOTES, 'UTF-8') ?></option>
+                <?php endforeach; ?>
+            </select>
         </section>
         <section>
-            <label for="country">País:</label>
-            <input list="country" name="country" class="datalist-input" />
-            <datalist id="country">
-                <option value="Afghanistan">
-                <option value="Albania">
-                <option value="Algeria">
-                <option value="Andorra">
-                <option value="Argentina">
-                <option value="Australia">
-                <option value="Bolivia">
-                <option value="Brazil">
-                <option value="Canada">
-                <option value="Chile">
-                <option value="China">
-                <option value="Colombia">
-                <option value="Costa Rica">
-                <option value="Cuba">
-                <option value="Dominican Republic">
-                <option value="Ecuador">
-                <option value="El Salvador">
-                <option value="Equatorial Guinea">
-                <option value="France">
-                <option value="Germany">
-                <option value="Guatemala">
-                <option value="Honduras">
-                <option value="Italy">
-                <option value="Japan">
-                <option value="Mexico">
-                <option value="Nicaragua">
-                <option value="Panama">
-                <option value="Paraguay">
-                <option value="Peru">
-                <option value="Portugal">
-                <option value="Puerto Rico">
-                <option value="Spain">
-                <option value="United Kingdom">
-                <option value="United States">
-                <option value="Uruguay">
-                <option value="Venezuela">
-            </datalist><br>
-            <label>Ciudad: <input type="text" name="ciudad"></label>
+            <label for="pais">País:</label>
+            <?php renderSelectPaises($paises, '', '-- Todos los países --', 'pais', 'pais'); ?><br>
+            <label for="ciudad">Ciudad: <input type="text" id="ciudad" name="ciudad"></label>
+        </section>
+        <section>
+            <label for="precio_min">Precio entre: <input type="number" id="precio_min" name="precio_min" step="0.01" min="0"></label>
+            <label for="precio_max">y: <input type="number" id="precio_max" name="precio_max" step="0.01" min="0"></label>
+        </section>
+        <section>
+            <label for="fecha_min">Fecha entre: <input type="date" id="fecha_min" name="fecha_min"></label>
+            <label for="fecha_max">y: <input type="date" id="fecha_max" name="fecha_max"></label>
         </section>
         <section id="boton-enviar">
             <input type="submit" value="🔍">
@@ -100,7 +118,7 @@ session_write_close();
     <footer>
         <br><br>
         <hr size="1px" align="center" color="black">
-        <p>&copy; 2026. Aviso de copyright: Contenido de uso libre.</p>
+        <p>© 2026. Aviso de copyright: Contenido de uso libre.</p>
     </footer>
 </body>
 </html>

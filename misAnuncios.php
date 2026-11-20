@@ -1,4 +1,3 @@
-
 <?php
 require_once "permitidos.php";
 require_once "conexion.php";
@@ -36,8 +35,11 @@ function ReadData()
     $stmt->execute();
 
     $resultado = $stmt->get_result();
+    $totalAnuncios = $resultado->num_rows;
 
-    if ($resultado->num_rows === 0) {
+    echo "<p><strong>Total de anuncios:</strong> " . (int)$totalAnuncios . "</p>";
+
+    if ($totalAnuncios === 0) {
         echo "<p>No tienes anuncios publicados.</p>";
     }
 
@@ -46,9 +48,9 @@ function ReadData()
 
         <section>
 
-            <h3>
+            <h2>
                 <?= htmlspecialchars($anuncio['Titulo'] ?? '', ENT_QUOTES, 'UTF-8') ?>
-            </h3>
+            </h2>
 
             <a href="verFotos.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
 
@@ -84,6 +86,12 @@ function ReadData()
             </p>
 
             <p>
+                <a href="verAnuncio.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
+                    <button type="button">Ver anuncio</button>
+                </a>
+            </p>
+
+            <p>
                 <a href="verFotos.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
                     Ver todas las fotografías del anuncio
                 </a>
@@ -102,6 +110,7 @@ function ReadData()
         <?php
     }
 
+    $resultado->close();
     $stmt->close();
     $conn->close();
 }

@@ -1,4 +1,3 @@
-
 <?php
 require_once "permitidos.php";
 require_once "conexion.php";
@@ -174,6 +173,15 @@ function ReadData()
                 </a>
             </p>
 
+            <?php if (
+                (isset($_SESSION["idUsuario"]) && (int)$_SESSION["idUsuario"] === (int)$row["IdPropietario"]) ||
+                (isset($_SESSION["usuario"]) && strcasecmp((string)$_SESSION["usuario"], (string)$row["Usuario"]) === 0)
+            ): ?>
+                <p>
+                    <a href="mensajesAnuncio.php?id=<?= $id ?>">Ver mensajes recibidos</a>
+                </p>
+            <?php endif; ?>
+
         </section>
 
         <?php
@@ -198,10 +206,6 @@ function ReadData()
     <h1>Detalles del anuncio</h1>
 
     <?php ReadData(); ?>
-
-    <p>
-        <a href="busqueda.php">Volver a la búsqueda</a>
-    </p>
 
 </body>
 </html>

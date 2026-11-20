@@ -284,7 +284,7 @@ session_write_close();
 
         <br><br>
 
-        <h2>Anuncios destacados</h2>
+        <h2>Últimos anuncios publicados</h2>
 
         <hr size="1px" align="left" color="black">
 
